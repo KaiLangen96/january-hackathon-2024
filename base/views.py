@@ -20,3 +20,23 @@ class HomePageView(generic.View):
             "home.html",
         )
 
+
+
+class TrackerPageView(generic.View):
+    """
+    Basic homepage view.
+
+    """
+
+    def get(self, request):
+        """
+        Basic Get view for the homepage.
+
+        """
+     
+
+        return render(
+            request,
+            "tracker.html",
+        )
+
