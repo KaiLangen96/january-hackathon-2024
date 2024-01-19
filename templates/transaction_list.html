@@ -1,0 +1,33 @@
+<!-- templates/transaction_list.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Transaction List</h1>
+  <form method="post" action="{% url 'transaction_list' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Transaction</button>
+  </form>
+  <hr>
+  <h2>Category Totals</h2>
+  <ul>
+    {% for category, total in category_totals.items %}
+      <li>{{ category }}: {{ total }}</li>
+    {% endfor %}
+  </ul>
+  <hr>
+  <h2>Leftover Money: {{ leftover_money }}</h2>
+  <hr>
+  <h2>Transaction History</h2>
+  <ul>
+    {% for transaction in transactions %}
+      <li>
+        {{ transaction.description }} - {{ transaction.amount }}
+        {% if transaction.category %}
+          ({{ transaction.category.name }})
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
