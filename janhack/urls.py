@@ -22,8 +22,3 @@ urlpatterns = [
     path("", include("base.urls"),),
     path("accounts/", include("allauth.urls")),
 ]
-
-handler500 = 'janhack.views.error_500'
-handler405= 'janhack.views.error_405'
-handler404 = 'janhack.views.error_404'
-handler403= 'janhack.views.error_403'
