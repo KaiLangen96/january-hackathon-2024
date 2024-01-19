@@ -5,13 +5,25 @@ class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
         fields = ['description', 'amount', 'date', 'category']
-        widgets = {
-            'date': forms.DateInput(attrs={'type': 'date'}),
-        }
 
-    def __init__(self, *args, **kwargs):
-        super(TransactionForm, self).__init__(*args, **kwargs)
-        self.fields['category'].required = True
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+
+        # Set the DateInput widget for the 'date' field
+        self.fields['date'].widget = forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d')
+
+    def clean_date(self):
+        # Ensure the date is in the correct format for submission
+        date = self.cleaned_data['date']
+        return date.strftime('%Y-%m-%d')
+
+    def save(self, commit=True):
+        transaction = super().save(commit=False)
+        transaction.user = self.user
+        if commit:
+            transaction.save()
+        return transaction
 
 
 class CategoryForm(forms.ModelForm):
