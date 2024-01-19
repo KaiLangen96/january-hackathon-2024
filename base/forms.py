@@ -1,5 +1,5 @@
 from django import forms
-from .models import Transaction, Category
+from .models import Transaction, Category, SavingGoal, SavingsDeposit
 
 class TransactionForm(forms.ModelForm):
     class Meta:
@@ -30,3 +30,13 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['name']
+
+class SavingGoalForm(forms.ModelForm):
+    class Meta:
+        model = SavingGoal
+        fields = ['name', 'target_amount']
+
+class SavingsDepositForm(forms.ModelForm):
+    class Meta:
+        model = SavingsDeposit
+        fields = ['amount']

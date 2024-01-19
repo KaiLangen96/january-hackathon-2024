@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic, View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -6,8 +6,9 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
 
-from .models import Transaction, Category
-from .forms import TransactionForm, CategoryForm
+from .models import Transaction, Category, SavingGoal, SavingsDeposit
+from .forms import TransactionForm, CategoryForm, SavingGoalForm, SavingsDepositForm
+
 
 class HomePageView(generic.View):
     """
@@ -158,3 +159,63 @@ class CategoryListView(UserPassesTestMixin, View):  # Update the class definitio
             return redirect('category_list')
 
         return render(request, self.template_name, {'categories': categories, 'form': form})
+
+@login_required
+def saving_goals(request):
+    template_name = 'saving_goals.html'
+    goals = SavingGoal.objects.filter(user=request.user)
+
+    return render(request, template_name, {'goals': goals})
+
+@login_required
+def add_saving_goal(request):
+    template_name = 'add_saving_goal.html'
+
+    if request.method == 'POST':
+        form = SavingGoalForm(request.POST)
+        if form.is_valid():
+            goal = form.save(commit=False)
+            goal.user = request.user
+            goal.save()
+            return redirect('saving_goals')
+    else:
+        form = SavingGoalForm()
+
+    return render(request, template_name, {'form': form})
+
+@login_required
+def update_saving_goal(request, pk):
+    template_name = 'update_saving_goal.html'
+    goal = get_object_or_404(SavingGoal, pk=pk)
+
+    if request.method == 'POST':
+        form = SavingGoalForm(request.POST, instance=goal)
+        if form.is_valid():
+            form.save()
+            return redirect('saving_goals')
+    else:
+        form = SavingGoalForm(instance=goal)
+
+    return render(request, template_name, {'form': form, 'goal': goal})
+
+@login_required
+def add_savings_deposit(request, goal_pk):
+    template_name = 'add_savings_deposit.html'
+    goal = get_object_or_404(SavingGoal, pk=goal_pk)
+
+    if request.method == 'POST':
+        form = SavingsDepositForm(request.POST)
+        if form.is_valid():
+            deposit = form.save(commit=False)
+            deposit.goal = goal
+            deposit.save()
+
+            # Update the current amount of the saving goal
+            goal.current_amount += deposit.amount
+            goal.save()
+
+            return redirect('saving_goals')
+    else:
+        form = SavingsDepositForm()
+
+    return render(request, template_name, {'form': form, 'goal': goal})
