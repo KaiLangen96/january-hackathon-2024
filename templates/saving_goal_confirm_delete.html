@@ -1,0 +1,13 @@
+<!-- templates/saving_goal_confirm_delete.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Delete Saving Goal</h1>
+  <p>Are you sure you want to delete the saving goal "{{ object.name }}"?</p>
+  <form method="post" action="">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+  </form>
+  <a href="{% url 'transaction_list' %}">Cancel</a>
+{% endblock %}

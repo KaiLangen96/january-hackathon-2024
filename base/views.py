@@ -82,22 +82,19 @@ class ContactPageView(generic.View):
 def transaction_list(request):
     template_name = 'transaction_list.html'
     categories = Category.objects.all()
-
-    if request.method == 'POST':
-        form = TransactionForm(user=request.user, data=request.POST)
-        if form.is_valid():
-            form.save()
-    else:
-        form = TransactionForm(user=request.user)
-
-    # Filter transactions for the authenticated user
     transactions = Transaction.objects.filter(user=request.user)
-    
+    saving_goals = SavingGoal.objects.filter(user=request.user)
+
     category_totals = {category.name: 0 for category in categories}
 
     for transaction in transactions:
         if transaction.category:
             category_totals[transaction.category.name] += transaction.amount
+
+            # Update the SavingGoal if a saving_goal is associated with the transaction
+            if transaction.saving_goal:
+                transaction.saving_goal.current_amount += transaction.amount
+                transaction.saving_goal.save()
 
     total_income = category_totals.get('Income', 0)
     total_expenses = category_totals.get('Expense', 0)
@@ -105,7 +102,30 @@ def transaction_list(request):
 
     leftover_money = total_income - (total_expenses + total_savings)
 
-    return render(request, template_name, {'transactions': transactions, 'categories': categories, 'form': form, 'category_totals': category_totals, 'leftover_money': leftover_money})
+    if request.method == 'POST':
+        form = TransactionForm(request.user, request.POST)
+        if form.is_valid():
+            transaction = form.save(commit=False)
+            transaction.user = request.user
+            transaction.save()
+
+            # Update the SavingGoal if the transaction is associated with one
+            if transaction.saving_goal:
+                transaction.saving_goal.current_amount += transaction.amount
+                transaction.saving_goal.save()
+
+            return redirect('transaction_list')
+    else:
+        form = TransactionForm(request.user)
+
+    return render(request, template_name, {
+        'transactions': transactions,
+        'categories': categories,
+        'form': form,
+        'category_totals': category_totals,
+        'leftover_money': leftover_money,
+        'saving_goals': saving_goals,
+    })
 
 
 @method_decorator(login_required, name='dispatch')
@@ -219,3 +239,8 @@ def add_savings_deposit(request, goal_pk):
         form = SavingsDepositForm()
 
     return render(request, template_name, {'form': form, 'goal': goal})
+
+class SavingGoalDeleteView(DeleteView):
+    model = SavingGoal
+    success_url = reverse_lazy('transaction_list')  # Redirect to the transaction list after deletion
+    template_name = 'saving_goal_confirm_delete.html'  # Create this template if it doesn't exist
