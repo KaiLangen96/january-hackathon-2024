@@ -1,0 +1,19 @@
+<!-- templates/category_list.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Category List</h1>
+  <form method="post" action="{% url 'category_list' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Category</button>
+  </form>
+  <hr>
+  <h2>Categories</h2>
+  <ul>
+    {% for category in categories %}
+      <li>{{ category.name }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
