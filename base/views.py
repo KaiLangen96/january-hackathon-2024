@@ -118,3 +118,38 @@ class CategoryListView(UserPassesTestMixin, View):  # Update the class definitio
         return render(request, self.template_name, {'categories': categories, 'form': form})
     
     
+class AboutPageView(generic.View):
+    """
+    Basic about view.
+
+    """
+
+    def get(self, request):
+        """
+        Basic Get view for the homepage.
+
+        """
+     
+
+        return render(
+            request,
+            "about.html",
+        )
+
+class ContactPageView(generic.View):
+    """
+    Basic homepage view.
+
+    """
+
+    def get(self, request):
+        """
+        Basic Get view for the homepage.
+
+        """
+     
+
+        return render(
+            request,
+            "contact.html",
+        )
