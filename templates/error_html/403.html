@@ -1,0 +1,16 @@
+{% extends 'base.html' %} 
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 my-auto form-container text-center rounded mx-auto my-2 py-2">
+            <h1>Error 403: Access Forbidden</h1>
+            <h2>Sorry about that - looks like you don't have permission to access that page!</h2>
+            <div>
+                <p>Here are some helpful links instead</p>
+                <a href="{% url 'home' %}" class="btn">Home</a>
+                <a href="{% url 'contact' %}" class="btn">Contact</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
