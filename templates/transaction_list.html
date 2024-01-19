@@ -4,30 +4,43 @@
 
 {% block content %}
   <h1>Transaction List</h1>
-  <form method="post" action="{% url 'transaction_list' %}">
+
+  <!-- Display form for adding a new transaction or depositing money towards a saving goal -->
+  <form method="post" action="">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Add Transaction</button>
+
+    <!-- Add a dropdown menu to select the action -->
+    <label for="action_select">Choose Action:</label>
+    <select id="action_select" name="action">
+      <option value="add_transaction">Add Transaction</option>
+      <option value="add_deposit">Deposit towards Saving Goal</option>
+    </select>
+
+    <button type="submit">Perform Action</button>
   </form>
-  <hr>
-  <h2>Category Totals</h2>
-  <ul>
-    {% for category, total in category_totals.items %}
-      <li>{{ category }}: {{ total }}</li>
+
+  <!-- Display transactions -->
+  <h2>Transactions</h2>
+  {% for transaction in transactions %}
+    <p>
+      {{ transaction.description }} - Amount: {{ transaction.amount }}€ - Date: {{ transaction.date }}
+      <a href="{% url 'update_transaction' pk=transaction.pk %}">Update</a>
+      <a href="{% url 'delete_transaction' pk=transaction.pk %}">Delete</a>
+    </p>
+  {% endfor %}
+
+  <!-- Display saving goals -->
+  {% if saving_goals %}
+    <h2>Saving Goals</h2>
+    {% for goal in saving_goals %}
+      <p>
+        {{ goal.name }} - Target Amount: {{ goal.target_amount }}€ - Current Amount: {{ goal.current_amount }}€
+        <a href="{% url 'update_saving_goal' pk=goal.pk %}">Update</a>
+        <a href="{% url 'add_savings_deposit' goal_pk=goal.pk %}">Add Deposit</a>
+        <a href="{% url 'delete_saving_goal' pk=goal.pk %}">Delete</a>
+      </p>
     {% endfor %}
-  </ul>
-  <hr>
-  <h2>Leftover Money: {{ leftover_money }}</h2>
-  <hr>
-  <h2>Transaction History</h2>
-  <ul>
-    {% for transaction in transactions %}
-      <li>
-        {{ transaction.description }} - {{ transaction.amount }}
-        {% if transaction.category %}
-          ({{ transaction.category.name }})
-        {% endif %}
-      </li>
-    {% endfor %}
-  </ul>
+  {% endif %}
+
 {% endblock %}

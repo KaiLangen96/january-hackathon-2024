@@ -1,0 +1,13 @@
+<!-- templates/add_saving_goal.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Add Saving Goal</h1>
+  <form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Goal</button>
+  </form>
+  <a href="{% url 'saving_goals' %}">Cancel</a>
+{% endblock %}
