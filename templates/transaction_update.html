@@ -1,0 +1,13 @@
+<!-- templates/transaction_update.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Update Transaction</h1>
+  <form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update Transaction</button>
+  </form>
+  <a href="{% url 'transaction_list' %}">Cancel</a>
+{% endblock %}

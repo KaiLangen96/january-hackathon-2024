@@ -27,6 +27,8 @@
         {% if transaction.category %}
           ({{ transaction.category.name }})
         {% endif %}
+        <a href="{% url 'update_transaction' pk=transaction.pk %}">Update</a>
+        <a href="{% url 'delete_transaction' pk=transaction.pk %}">Delete</a>
       </li>
     {% endfor %}
   </ul>
