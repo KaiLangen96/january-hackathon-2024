@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 
+import dj_database_url
+if os.path.isfile('env.py'):
+    import env
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,8 +32,7 @@ SECRET_KEY = 'django-insecure-90@y35z_6gj2g0mb5#7-71k7rw653w+0c*)+%9*n54ery&*&&%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','8000-caleom-januaryhackathon-xgwcw9wzc4k.ws-eu107.gitpod.io']
-
+ALLOWED_HOSTS = ['127.0.0.1','8000-caleom-januaryhackathon-xgwcw9wzc4k.ws-eu107.gitpod.io','8000-mattuw4-januaryhackatho-1i0t9x60fep.ws-eu107.gitpod.io', '.herokuapp.com']
 
 # Application definition
 
@@ -92,13 +95,16 @@ WSGI_APPLICATION = 'janhack.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
+DATABASES = {
+    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
