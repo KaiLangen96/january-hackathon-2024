@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-90@y35z_6gj2g0mb5#7-71k7rw653w+0c*)+%9*n54ery&*&&%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1',"localhost", '8000-caleom-januaryhackathon-xgwcw9wzc4k.ws-eu107.gitpod.io','8000-mattuw4-januaryhackatho-1i0t9x60fep.ws-eu107.gitpod.io', '.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1',"localhost", '8000-caleom-januaryhackathon-xgwcw9wzc4k.ws-eu107.gitpod.io','8000-mattuw4-januaryhackatho-1i0t9x60fep.ws-eu107.gitpod.io', '8000-aylamccarth-januaryhack-4tc1eeo004r.ws-eu107.gitpod.io', '.herokuapp.com']
 
 # Application definition
 
@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'base'
 ]
 
