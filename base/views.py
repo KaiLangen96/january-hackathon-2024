@@ -17,6 +17,7 @@ class HomePageView(generic.View):
     Basic homepage view.
 
     """
+
     def get(self, request):
         """
         Basic Get view for the homepage.
@@ -34,6 +35,7 @@ class TrackerPageView(generic.View):
     Basic homepage view.
 
     """
+
     template_name = "tracker.html"
 
     def get(self, request):
@@ -46,10 +48,9 @@ class TrackerPageView(generic.View):
         user = request.user
 
         context = {
-            'all_users': all_users,
-            'user': user,
+            "all_users": all_users,
+            "user": user,
         }
-
 
         return render(request, self.template_name, context)
 
@@ -65,12 +66,12 @@ class AboutPageView(generic.View):
         Basic Get view for the homepage.
 
         """
-     
 
         return render(
             request,
             "about.html",
         )
+
 
 class ContactPageView(generic.View):
     """
@@ -83,7 +84,6 @@ class ContactPageView(generic.View):
         Basic Get view for the homepage.
 
         """
-     
 
         return render(
             request,
@@ -93,7 +93,7 @@ class ContactPageView(generic.View):
 
 @login_required
 def transaction_list(request):
-    template_name = 'transaction_list.html'
+    template_name = "transaction_list.html"
     categories = Category.objects.all()
     transactions = Transaction.objects.filter(user=request.user)
     saving_goals = SavingGoal.objects.filter(user=request.user)
@@ -109,13 +109,13 @@ def transaction_list(request):
                 transaction.saving_goal.current_amount += transaction.amount
                 transaction.saving_goal.save()
 
-    total_income = category_totals.get('Income', 0)
-    total_expenses = category_totals.get('Expense', 0)
-    total_savings = category_totals.get('Savings', 0)
+    total_income = category_totals.get("Income", 0)
+    total_expenses = category_totals.get("Expense", 0)
+    total_savings = category_totals.get("Savings", 0)
 
     leftover_money = total_income - (total_expenses + total_savings)
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = TransactionForm(request.user, request.POST)
         if form.is_valid():
             transaction = form.save(commit=False)
@@ -127,26 +127,30 @@ def transaction_list(request):
                 transaction.saving_goal.current_amount += transaction.amount
                 transaction.saving_goal.save()
 
-            return redirect('transaction_list')
+            return redirect("transaction_list")
     else:
         form = TransactionForm(request.user)
 
-    return render(request, template_name, {
-        'transactions': transactions,
-        'categories': categories,
-        'form': form,
-        'category_totals': category_totals,
-        'leftover_money': leftover_money,
-        'saving_goals': saving_goals,
-    })
+    return render(
+        request,
+        template_name,
+        {
+            "transactions": transactions,
+            "categories": categories,
+            "form": form,
+            "category_totals": category_totals,
+            "leftover_money": leftover_money,
+            "saving_goals": saving_goals,
+        },
+    )
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required, name="dispatch")
 class TransactionUpdateView(UpdateView):
     model = Transaction
     form_class = TransactionForm
-    template_name = 'transaction_update.html'
-    success_url = reverse_lazy('transaction_list')
+    template_name = "transaction_update.html"
+    success_url = reverse_lazy("transaction_list")
 
     def get_queryset(self):
         # Ensure only the transactions of the authenticated user are considered
@@ -154,25 +158,24 @@ class TransactionUpdateView(UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
+        kwargs["user"] = self.request.user
         return kwargs
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required, name="dispatch")
 class TransactionDeleteView(DeleteView):
     model = Transaction
-    template_name = 'transaction_confirm_delete.html'
-    success_url = reverse_lazy('transaction_list')
+    template_name = "transaction_confirm_delete.html"
+    success_url = reverse_lazy("transaction_list")
 
     def get_queryset(self):
         # Ensure only the transactions of the authenticated user are considered
         return Transaction.objects.filter(user=self.request.user)
 
 
-
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required, name="dispatch")
 class CategoryListView(UserPassesTestMixin, View):  # Update the class definition
-    template_name = 'category_list.html'
+    template_name = "category_list.html"
 
     # Add the following test function
     def test_func(self):
@@ -181,7 +184,9 @@ class CategoryListView(UserPassesTestMixin, View):  # Update the class definitio
     def get(self, request, *args, **kwargs):
         categories = Category.objects.all()
         form = CategoryForm()
-        return render(request, self.template_name, {'categories': categories, 'form': form})
+        return render(
+            request, self.template_name, {"categories": categories, "form": form}
+        )
 
     def post(self, request, *args, **kwargs):
         categories = Category.objects.all()
@@ -189,54 +194,60 @@ class CategoryListView(UserPassesTestMixin, View):  # Update the class definitio
 
         if form.is_valid():
             form.save()
-            return redirect('category_list')
+            return redirect("category_list")
 
-        return render(request, self.template_name, {'categories': categories, 'form': form})
+        return render(
+            request, self.template_name, {"categories": categories, "form": form}
+        )
+
 
 @login_required
 def saving_goals(request):
-    template_name = 'saving_goals.html'
+    template_name = "saving_goals.html"
     goals = SavingGoal.objects.filter(user=request.user)
 
-    return render(request, template_name, {'goals': goals})
+    return render(request, template_name, {"goals": goals})
+
 
 @login_required
 def add_saving_goal(request):
-    template_name = 'add_saving_goal.html'
+    template_name = "add_saving_goal.html"
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = SavingGoalForm(request.POST)
         if form.is_valid():
             goal = form.save(commit=False)
             goal.user = request.user
             goal.save()
-            return redirect('saving_goals')
+            return redirect("saving_goals")
     else:
         form = SavingGoalForm()
 
-    return render(request, template_name, {'form': form})
+    return render(request, template_name, {"form": form})
+
 
 @login_required
 def update_saving_goal(request, pk):
-    template_name = 'update_saving_goal.html'
+    template_name = "update_saving_goal.html"
     goal = get_object_or_404(SavingGoal, pk=pk)
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = SavingGoalForm(request.POST, instance=goal)
         if form.is_valid():
             form.save()
-            return redirect('saving_goals')
+            return redirect("saving_goals")
     else:
         form = SavingGoalForm(instance=goal)
 
-    return render(request, template_name, {'form': form, 'goal': goal})
+    return render(request, template_name, {"form": form, "goal": goal})
+
 
 @login_required
 def add_savings_deposit(request, goal_pk):
-    template_name = 'add_savings_deposit.html'
+    template_name = "add_savings_deposit.html"
     goal = get_object_or_404(SavingGoal, pk=goal_pk)
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = SavingsDepositForm(request.POST)
         if form.is_valid():
             deposit = form.save(commit=False)
@@ -247,17 +258,21 @@ def add_savings_deposit(request, goal_pk):
             goal.current_amount += deposit.amount
             goal.save()
 
-            return redirect('saving_goals')
+            return redirect("saving_goals")
     else:
         form = SavingsDepositForm()
 
-    return render(request, template_name, {'form': form, 'goal': goal})
+    return render(request, template_name, {"form": form, "goal": goal})
+
 
 class SavingGoalDeleteView(DeleteView):
     model = SavingGoal
-    success_url = reverse_lazy('transaction_list')  # Redirect to the transaction list after deletion
-    template_name = 'saving_goal_confirm_delete.html'  # Create this template if it doesn't exist
-
+    success_url = reverse_lazy(
+        "transaction_list"
+    )  # Redirect to the transaction list after deletion
+    template_name = (
+        "saving_goal_confirm_delete.html"  # Create this template if it doesn't exist
+    )
 
 
 def handler404(request, exception):
