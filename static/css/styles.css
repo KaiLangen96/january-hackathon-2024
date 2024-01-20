@@ -200,11 +200,24 @@ a {
 
 /* Contact form */
 .contact-text {
-  color: #fff;
+  /* color: #fff; */
 }
 
 li {
   list-style-type: none
+}
+
+.contact-container {
+   background-color: rgba( 255, 255, 255, 0.9);
+   width: min(90%, 800px);
+}
+
+.contact-container .btn,
+.contact-container .btn:active {
+  color: rgb(255, 255, 255);
+  background-color: rgb(34, 34, 34) !important;
+  border-color: rgb(34, 34, 34) !important;
+  padding: 30px;
 }
 
 
