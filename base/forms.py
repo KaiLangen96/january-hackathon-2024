@@ -1,5 +1,6 @@
 from django import forms
 from .models import Transaction, Category, SavingGoal, SavingsDeposit
+from django.core.validators import EmailValidator
 
 class TransactionForm(forms.ModelForm):
     saving_goal = forms.ModelChoiceField(
@@ -47,3 +48,9 @@ class SavingsDepositForm(forms.ModelForm):
     class Meta:
         model = SavingsDeposit
         fields = ['amount']
+
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=100, required=True)
+    email = forms.EmailField(validators=[EmailValidator(message="Invalid Email")])
+    subject = forms.CharField(max_length=100)
+    message = forms.CharField(widget=forms.Textarea)
