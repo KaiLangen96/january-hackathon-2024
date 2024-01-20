@@ -5,15 +5,19 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('base', '0004_savingsdeposit'),
+        ("base", "0004_savingsdeposit"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='transaction',
-            name='saving_goal',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='base.savinggoal'),
+            model_name="transaction",
+            name="saving_goal",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="base.savinggoal",
+            ),
         ),
     ]
