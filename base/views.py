@@ -34,7 +34,7 @@ class HomePageView(generic.View):
 class TrackerPageView(generic.View):
     """
 
-    Basic homepage view.
+    Basic tracker view.
 
     """
 
