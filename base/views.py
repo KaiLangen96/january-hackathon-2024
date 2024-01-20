@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.views import generic, View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -6,10 +6,12 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
 
 
 from .models import Transaction, Category, SavingGoal, SavingsDeposit
-from .forms import TransactionForm, CategoryForm, SavingGoalForm, SavingsDepositForm
+from .forms import TransactionForm, CategoryForm, SavingGoalForm, SavingsDepositForm, ContactForm
 
 
 class HomePageView(generic.View):
@@ -267,12 +269,21 @@ def add_savings_deposit(request, goal_pk):
 
 class SavingGoalDeleteView(DeleteView):
     model = SavingGoal
-    success_url = reverse_lazy(
-        "transaction_list"
-    )  # Redirect to the transaction list after deletion
-    template_name = (
-        "saving_goal_confirm_delete.html"  # Create this template if it doesn't exist
-    )
+    success_url = reverse_lazy('transaction_list')  # Redirect to the transaction list after deletion
+    template_name = 'saving_goal_confirm_delete.html'  # Create this template if it doesn't exist
+
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Processes the form data
+            pass
+            messages.success(request, 'Your contact form has been submitted!')
+            return HttpResponseRedirect(reverse('contact'))
+    else:
+        form = ContactForm()
+    return render(request, 'contact.html', {'form': form})
 
 
 def handler404(request, exception):
