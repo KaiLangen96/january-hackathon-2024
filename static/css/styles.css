@@ -192,3 +192,12 @@ a {
   background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
   color: #fff;
 }
+
+/* Contact form */
+.contact-text {
+  color: #fff;
+}
+
+li {
+  list-style-type: none
+}
