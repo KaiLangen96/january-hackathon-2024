@@ -92,18 +92,24 @@
   font-size: 0.875em;
   line-height: 1.2;
 }
-.table a.table-link {
+form .table-link {
   margin: 0 5px;
   font-size: 1.125em;
+  background-color: #2b80e2;
+  color: white;
+  border: none;
+  border-radius: 5px;
 }
-.table a.table-link:hover {
+form .table-link:hover {
   text-decoration: none;
-  color: #2aa493;
+  background-color: #2aa493;
+  transform: scale(0.97);
+  transition: all 0.2s;
 }
-.table a.table-link.danger {
+form.table-link.danger {
   color: #fe635f;
 }
-.table a.table-link.danger:hover {
+form.table-link.danger:hover {
   color: #dd504c;
 }
 

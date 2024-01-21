@@ -27,32 +27,33 @@
 
             <tbody>
               {% for user in all_users %}
-
-              <tr>
-                <td>
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png"
-                    alt=""
-                  />
-                  <a href="#" class="user-link text-capitalize"
-                    >{{user.username}}</a
-                  >
-                  <span class="user-subhead">Admin</span>
-                </td>
-                <td>$1000</td>
-                <td class="text-center">
-                  <span class="label label-default">Date</span>
-                </td>
-                <td>
-                  <a href="#" class="table-link">
-                    <span class="fa-stack">
-                      <i class="fa fa-square fa-stack-2x"></i>
-                      <i class="fa fa-plus fa-stack-1x fa-inverse"></i>
-                    </span>
-                  </a>
-                </td>
-              </tr>
-              {% endfor %}
+              {% if user != request.user %}
+                  <tr>
+                      <td>
+                          <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="" />
+                          <a href="#" class="user-link text-capitalize">{{ user.username }}</a>
+                          <span class="user-subhead">Admin</span>
+                      </td>
+                      <td>$1000</td>
+                      <td class="text-center">
+                          <span class="label label-default">Date</span>
+                      </td>
+                      <td>
+                          <form method="post" action="{% url 'toggle_friend' %}" id="toggleFriendForm{{ user.id }}">
+                              {% csrf_token %}
+                              <input type="hidden" name="friend_id" value="{{ user.profile.id }}">
+                              <button type="submit" class="table-link">
+                                  {% if user.profile in request.user.profile.friends.all %}
+                                      <i class="fas fa-minus"></i> <!-- Show minus icon if already friends -->
+                                  {% else %}
+                                      <i class="fas fa-plus"></i> <!-- Show plus icon if not friends -->
+                                  {% endif %}
+                              </button>
+                          </form>
+                      </td>
+                  </tr>
+              {% endif %}
+          {% endfor %}
             </tbody>
           </table>
         </div>

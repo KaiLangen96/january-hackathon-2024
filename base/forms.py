@@ -36,10 +36,6 @@ class SavingGoalForm(forms.ModelForm):
         model = SavingGoal
         fields = ["name", "target_amount"]
 
-
-
-
-
 class ContactForm(forms.Form):
     name = forms.CharField(label="",max_length=100, required=True,widget=forms.TextInput(attrs={'placeholder': 'Your Name','class': 'my-2 w-50'}))
     email = forms.EmailField(label="",validators=[EmailValidator(message="Invalid Email")],widget=forms.TextInput(attrs={'placeholder': 'Your Email','class': 'my-2 w-50'}))

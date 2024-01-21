@@ -2,7 +2,7 @@
 
 from django.urls import path
 from . import views
-from .views import ( saving_goals, add_saving_goal, update_saving_goal, add_savings_deposit, SavingGoalDeleteView, contact
+from .views import ( saving_goals, add_saving_goal, update_saving_goal, add_savings_deposit, SavingGoalDeleteView, contact, toggle_friend
 )
 
 urlpatterns = [
@@ -18,4 +18,5 @@ urlpatterns = [
     path('saving-goals/<int:pk>/delete/', SavingGoalDeleteView.as_view(), name='delete_saving_goal'),
     path('contact/', contact, name='contact'),
     path('users_list/', views.UsersListView.as_view(), name='users_list'),
+    path('toggle_friend/', toggle_friend, name='toggle_friend'),
 ]

@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.http import JsonResponse
 from django.views import generic, View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.views.decorators.http import require_POST
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -10,7 +12,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 
 
-from .models import Transaction, SavingGoal
+from .models import Transaction, SavingGoal, Profile
 from .forms import TransactionForm, SavingGoalForm, ContactForm
 
 
@@ -51,28 +53,6 @@ class HomePageView(generic.View):
             request,
             "home.html",
         )
-
-class UsersListView(generic.View):
-    """
-    Basic homepage view.
-
-    """
-    template_name = "users_list.html"
-
-    def get(self, request):
-        """
-        Basic Get view for the homepage.
-
-        """
-
-        all_users = User.objects.all()
-        user = request.user
-
-        context = {
-            "all_users": all_users,
-        }
-
-        return render(request, self.template_name, context)
 
 
 class TrackerPageView(generic.View):
@@ -234,3 +214,46 @@ def handler405(request, exception):
     Custom 405 page
     """
     return render(request, "error_html/405.html", status=405)
+
+
+class UsersListView(generic.View):
+    """
+    Basic homepage view.
+
+    """
+    template_name = "users_list.html"
+
+    def get(self, request):
+        """
+        Basic Get view for the homepage.
+
+        """
+
+        all_users = User.objects.all()
+        user = request.user
+
+        context = {
+            "all_users": all_users,
+        }
+
+        return render(request, self.template_name, context)
+
+
+@login_required
+@require_POST
+def toggle_friend(request):
+    friend_id = request.POST.get('friend_id')
+    friend_profile = get_object_or_404(Profile, id=friend_id)
+    
+    user_profile = request.user.profile
+
+    if user_profile.friends.filter(id=friend_id).exists():
+        # If friend is already in the friends list, remove them
+        user_profile.friends.remove(friend_profile)
+        message = 'Friend removed successfully'
+    else:
+        # If friend is not in the friends list, add them
+        user_profile.friends.add(friend_profile)
+        message = 'Friend added successfully'
+
+    return redirect('users_list')
