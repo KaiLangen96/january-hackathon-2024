@@ -11,3 +11,11 @@
   </form>
   <a href="{% url 'saving_goals' %}">Cancel</a>
 {% endblock %}
+
+{% comment %} <form method="post" action="">
+  {% csrf_token %}
+  {{ form.as_p }}
+
+
+  <button type="submit">Perform Action</button>
+</form> {% endcomment %}

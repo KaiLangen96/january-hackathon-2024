@@ -14,6 +14,7 @@ urlpatterns = [
     path('transactions/<int:pk>/update/', TransactionUpdateView.as_view(), name='update_transaction'),
     path('transactions/<int:pk>/delete/', TransactionDeleteView.as_view(), name='delete_transaction'),
     path('categories/', CategoryListView.as_view(), name='category_list'),
+    path('saving_goal_details/<int:goal_pk>/', views.saving_goal_details, name='saving_goal_details'),
     path('saving-goals/', saving_goals, name='saving_goals'),
     path('saving-goals/add/', add_saving_goal, name='add_saving_goal'),
     path('saving-goals/<int:pk>/update/', update_saving_goal, name='update_saving_goal'),

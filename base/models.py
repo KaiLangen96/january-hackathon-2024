@@ -39,10 +39,10 @@ class Transaction(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
     category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL, blank=True, null=True
+        Category, on_delete=models.CASCADE
     )
     saving_goal = models.ForeignKey(
-        SavingGoal, on_delete=models.SET_NULL, blank=True, null=True
+        SavingGoal, on_delete=models.CASCADE, related_name="saving_goal"
     )
 
     def __str__(self):

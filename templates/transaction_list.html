@@ -10,12 +10,6 @@
     {% csrf_token %}
     {{ form.as_p }}
 
-    <!-- Add a dropdown menu to select the action -->
-    <label for="action_select">Choose Action:</label>
-    <select id="action_select" name="action">
-      <option value="add_transaction">Add Transaction</option>
-      <option value="add_deposit">Deposit towards Saving Goal</option>
-    </select>
 
     <button type="submit">Perform Action</button>
   </form>
