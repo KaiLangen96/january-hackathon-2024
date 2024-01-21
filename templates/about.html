@@ -1,44 +1,132 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "base.html" %} {% load static %}
 <!--  -->
 {% block content %}
 <!--  -->
+<div class="container about-container text-center my-3 p-4 rounded">
+  <div class="row align-items-center">
+    <div class="col-12 col-md-6 text-lg-end">
+      <h2>Welcome to Budget Buddies</h2>
+      <p><em>Your go-to companion for achieving financial success!</em></p>
+    </div>
+    <div class="col-12 col-md-6 text-lg-start">
+      <h6>Our Mission</h6>
 
+      <p>
+        At Budget Buddies, we believe that financial freedom should be
+        accessible to everyone. Our mission is to empower individuals to take
+        control of their finances, make informed decisions, and achieve their
+        financial goals.
+      </p>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col">
+      <h4>What We Offer</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="left col-12 col-md-4 text-lg-start">
+      <div class="row h-50">
+        <div class="col">
+          <h6>Easy Expense Tracking</h6>
+          <p>
+            Say goodbye to the hassle of managing your expenses. Budget Buddies
+            simplifies expense tracking, allowing you to effortlessly log your
+            transactions and gain insights into your spending habits.
+          </p>
+        </div>
+      </div>
+      <div class="row h-50 align-items-end">
+        <div class="col">
+          <h6>Goal Setting and Monitoring</h6>
+          <p>
+            Set realistic financial goals, whether it's saving for a vacation,
+            an emergency fund, or paying off debts. Budget Buddies helps you
+            monitor your progress and provides actionable insights to keep you
+            on track.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="middle col-12 col-md-4 order-first order-md-0">
+      <img
+        class="img-fluid d-block logo"
+        src="static/images/logo-no-bg.png"
+        alt="logo"
+      />
+    </div>
+    <div class="right col-12 col-md-4 text-lg-end">
+      <div class="row h-50">
+        <div class="col">
+          <h6>Budgeting Made Simple</h6>
+          <p>
+            Creating and sticking to a budget has never been easier. Our
+            user-friendly interface lets you set up budgets for various
+            categories and provides real-time updates on your spending against
+            your budget limits.
+          </p>
+        </div>
+      </div>
+      <div class="row h-50 align-items-end">
+        <div class="col">
+          <h6>Insightful Reports</h6>
+          <p>
+            Budget Buddies generates comprehensive reports that give you a clear
+            picture of your financial health. Understand where your money goes,
+            identify areas for improvement, and make informed decisions to
+            optimize your spending.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-12 col-md-6">
+      <h4>Why Budget Buddies?</h4>
+      <ul class="list-group list-group-flush">
+        <li
+          class="list-group-item about-list"
+        >
+          <div>
+            <div class="fw-bold">User-Friendly</div>
+            Our app is designed with simplicity in mind, making it easy for
+            anyone to use, regardless of their financial expertise.
+          </div>
+        </li>
 
-<div class="col-12 container-fluid bg-succes pt-3 text-center text-white">
+        <li
+          class="list-group-item about-list"
+        >
+          <div>
+            <div class="fw-bold">Secure and Private</div>
+            We prioritize the security and privacy of your financial data. Your
+            information is encrypted and stored securely.
+          </div>
+        </li>
 
-<h2>Welcome to Budget Buddies, </h2>
-<p><em>Your go-to companion for achieving financial success!</em></p>
-
-<div><strong>Our Mission</strong></div>
-
-<p>At Budget Buddies, we believe that financial freedom should be accessible to everyone. Our mission is to empower individuals to take control of their finances, make informed decisions, and achieve their financial goals. 
-</p>
-<div class="pt-3"><strong>What We Offer</strong></div>
-
-<p class="pt-3"><strong>Easy Expense Tracking: </strong>Say goodbye to the hassle of managing your expenses. Budget Buddies simplifies expense tracking, allowing you to effortlessly log your transactions and gain insights into your spending habits.
-</p>
-<p class="pt-3"><strong>Goal Setting and Monitoring: </strong>
-Set realistic financial goals, whether it's saving for a vacation, an emergency fund, or paying off debts. Budget Buddies helps you monitor your progress and provides actionable insights to keep you on track.
-</p>
-<p class="pt-3"><strong>Budgeting Made Simple: </strong>
-Creating and sticking to a budget has never been easier. Our user-friendly interface lets you set up budgets for various categories and provides real-time updates on your spending against your budget limits.
-</p>
-<p class="pt-3"><strong>Insightful Reports: </strong>
-Budget Buddies generates comprehensive reports that give you a clear picture of your financial health. Understand where your money goes, identify areas for improvement, and make informed decisions to optimize your spending.
-</p>
-<p class="pt-3"><strong>Why Budget Buddies?: </strong>
-- **User-Friendly**: Our app is designed with simplicity in mind, making it easy for anyone to use, regardless of their financial expertise.
-
-- **Secure and Private**: We prioritize the security and privacy of your financial data. Your information is encrypted and stored securely.
-
-- **Accessible Anywhere, Anytime**: Whether you're at home or on the go, Budget Buddies is accessible from any device. Your financial information syncs seamlessly across all platforms.
-</p>
-<p class="pt-3"><strong>Get Started Today: </strong>
-Join the Budget Buddies community and embark on a journey towards financial well-being. Take control of your money, plan for the future, and enjoy the peace of mind that comes with financial stability.
-
-Ready to get started? <a class="nav-link" href="{% url 'account_signup' %}">Register</a> today and let Budget Buddies be your financial guide!
-
+        <li
+          class="list-group-item about-list"
+        >
+          <div>
+            <div class="fw-bold">Accessible Anywhere, Anytime</div>
+            Whether you're at home or on the go, Budget Buddies is accessible
+            from any device. Your financial information syncs seamlessly across
+            all platforms.
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-12 col-md-6">
+      <h4>Get Started Today</h4>
+      <p>
+        Join the Budget Buddies community and embark on a journey towards
+        financial well-being. Take control of your money, plan for the future,
+        and enjoy the peace of mind that comes with financial stability. Ready
+        to get started?<a class="nav-link" href="{% url 'account_signup' %}">Register</a>today
+        and let Budget Buddies be your financial guide!
+      </p>
+    </div>
+  </div>
 </div>
 
 {%endblock%}

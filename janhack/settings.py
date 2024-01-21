@@ -36,7 +36,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "8000-caleom-januaryhackathon-xgwcw9wzc4k.ws-eu107.gitpod.io",
+    ".gitpod.io",
     "8000-mattuw4-januaryhackatho-1i0t9x60fep.ws-eu107.gitpod.io",
     "8000-aylamccarth-januaryhack-4tc1eeo004r.ws-eu107.gitpod.io",
     ".herokuapp.com",
