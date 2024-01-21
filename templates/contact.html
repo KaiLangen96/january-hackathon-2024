@@ -37,7 +37,7 @@
     }
 
 </script>
-<div class="contact-container container rounded my-3">
+<div class="contact-container container rounded my-3 add-info-block">
   <div class="pt-3 text-center contact-text">
     <h1>Contact Page</h1>
     <p>
@@ -45,23 +45,23 @@
       to leave some feedback!
     </p>
     
-    <form id="contact-form" role="form>
+    <form id="contact-form" role="form">
       {% csrf_token %}
       <div class="form-group">
       <label class="form-label" for="user_name">Your Name:</label>
-      <input size="25" type="text" name="user_name" id="name" required />
+      <input size="25" type="text" name="user_name" id="name" required placeholder="Username"/>
       </div>
       <div class="form-group">
       <label class="form-label" for="user_email">Your Email Address:</label>
-      <input size="25" type="email" name="user_email" id="email" data-rule="email" required/>
+      <input size="25" type="email" name="user_email" id="email" data-rule="email" required placeholder="E-mail"/>
       </div>
       <div class="form-group">
       <label class="form-label" for="subject">Message Subject:</label>
-      <input size="25" type="text" name="subject" id="subject"/>
+      <input size="25" type="text" name="subject" id="subject" placeholder="Subject"/>
       </div>
       <div class="form-group">
       <label class="form-label" for="message">Message:</label>
-      <textarea rows="6" cols="30" name="message" rows="10" id="message" required></textarea>
+      <textarea rows="6" cols="30" name="message" rows="10" id="message" required placeholder="Message"></textarea>
       </div>
       <div>
       <button class="btn btn-primary  my-2" id="sendButton" onclick='sendMail()' value="Send" type="submit">Send Message</button>
