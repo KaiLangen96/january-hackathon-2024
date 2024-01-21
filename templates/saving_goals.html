@@ -5,9 +5,11 @@
 {% block content %}
   <h1>Saving Goals</h1>
   {% for goal in goals %}
+  <a href="{% url "saving_goal_details" goal_pk=goal.pk %}">
     <p>{{ goal.name }} - Target Amount: {{ goal.target_amount }}€ - Current Amount: {{ goal.current_amount }}€</p>
     <a href="{% url 'update_saving_goal' pk=goal.pk %}">Update</a>
     <a href="{% url 'add_savings_deposit' goal_pk=goal.pk %}">Add Deposit</a>
+  </a>
   {% endfor %}
   <a href="{% url 'add_saving_goal' %}">Add New Goal</a>
 {% endblock %}

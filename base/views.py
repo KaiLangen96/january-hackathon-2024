@@ -204,6 +204,13 @@ class CategoryListView(UserPassesTestMixin, View):  # Update the class definitio
 
 
 @login_required
+def saving_goal_details(request, goal_pk):
+    template_name = "saving_goal_details.html"
+    goal = get_object_or_404(SavingGoal, pk=goal_pk)
+
+    return render(request, template_name, {"goal": goal})
+
+@login_required
 def saving_goals(request):
     template_name = "saving_goals.html"
     goals = SavingGoal.objects.filter(user=request.user)
@@ -250,7 +257,7 @@ def add_savings_deposit(request, goal_pk):
     goal = get_object_or_404(SavingGoal, pk=goal_pk)
 
     if request.method == "POST":
-        form = SavingsDepositForm(request.POST)
+        form = TransactionForm(request.POST)
         if form.is_valid():
             deposit = form.save(commit=False)
             deposit.goal = goal
@@ -262,7 +269,7 @@ def add_savings_deposit(request, goal_pk):
 
             return redirect("saving_goals")
     else:
-        form = SavingsDepositForm()
+        form = TransactionForm(request.user)
 
     return render(request, template_name, {"form": form, "goal": goal})
 

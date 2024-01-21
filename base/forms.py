@@ -50,6 +50,8 @@ class SavingGoalForm(forms.ModelForm):
         fields = ["name", "target_amount"]
 
 
+
+# REMOVE WHEN TRANSACTION FORM IS WORKING
 class SavingsDepositForm(forms.ModelForm):
     class Meta:
         model = SavingsDeposit
