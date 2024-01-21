@@ -203,9 +203,14 @@ a {
  input[type="text"], 
  input[type="email"],
  input[type="password"]{
-width: 40%;
+width: min(90%, 500px);
 height: 2.5rem
 }
+
+textarea{
+  width: min(90%, 500px);
+}
+
 .helptext{
   display:flex;
   flex-direction: column;
@@ -333,20 +338,17 @@ background: linear-gradient(270deg, rgba(245,245,245,1) 10%, rgba(245,245,245,0)
 .right-col-slide-delay{
   opacity: 0;
   animation: SlideRight 2s linear 1.5s forwards;
+}
 
 .form-group {
-  margin: 2rem;
+  margin: 1rem;
 }
 
-.form-label {
+/* .form-label {
   display: block;
 
-}
-
-/* .contact-container {
-   background-color: rgba( 255, 255, 255, 0.9);
-   width: min(90%, 800px);
 } */
+
 /*===========Contact Page and login Styling ========*/
 .contact-container .btn,
 .contact-container .btn:active,
