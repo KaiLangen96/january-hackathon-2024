@@ -1,5 +1,5 @@
 from django import forms
-from .models import Transaction, SavingGoal, SavingsDeposit
+from .models import Transaction, SavingGoal
 from django.core.validators import EmailValidator
 
 
@@ -38,18 +38,6 @@ class SavingGoalForm(forms.ModelForm):
 
 
 
-# REMOVE WHEN TRANSACTION FORM IS WORKING
-class SavingsDepositForm(forms.ModelForm):
-    class Meta:
-        model = SavingsDeposit
-        fields = ['amount']
-
-# SUBJECT_CHOICES = {
-#     "Issue",
-#     "Feedback",
-# }
-
-# , choices = SUBJECT_CHOICES
 
 
 class ContactForm(forms.Form):

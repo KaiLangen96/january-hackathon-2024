@@ -10,8 +10,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 
 
-from .models import Transaction, SavingGoal, SavingsDeposit
-from .forms import TransactionForm, SavingGoalForm, SavingsDepositForm, ContactForm
+from .models import Transaction, SavingGoal
+from .forms import TransactionForm, SavingGoalForm, ContactForm
 
 
 
@@ -51,6 +51,28 @@ class HomePageView(generic.View):
             request,
             "home.html",
         )
+
+class UsersListView(generic.View):
+    """
+    Basic homepage view.
+
+    """
+    template_name = "users_list.html"
+
+    def get(self, request):
+        """
+        Basic Get view for the homepage.
+
+        """
+
+        all_users = User.objects.all()
+        user = request.user
+
+        context = {
+            "all_users": all_users,
+        }
+
+        return render(request, self.template_name, context)
 
 
 class TrackerPageView(generic.View):

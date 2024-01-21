@@ -2,6 +2,39 @@ from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 
+
+class Profile(models.Model):
+    """
+    Model to represent extend auth User Class to add addition
+    profile information.
+
+    """
+
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    friends = models.ManyToManyField('self', blank=True)
+
+    def __str__(self):
+        """Return a string representation of the object (the post's title)."""
+        return str(self.user)
+
+def create_user_profile(instance, created, *args, **kwargs):
+    """
+    Signal handler function to create a user profile when a
+    new user is created.
+
+    This function is connected to the User model's post_save signal.
+    kwargs are required for dispatch signals
+
+    """
+    if created:
+        Profile.objects.create(user=instance)
+
+# Connects profile to user instance with signals
+
+
+models.signals.post_save.connect(create_user_profile, sender=User)
+
+
 class SavingGoal(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
@@ -10,20 +43,6 @@ class SavingGoal(models.Model):
 
     def __str__(self):
         return self.name
-
-    def add_deposit(self, amount):
-        self.current_amount += amount
-        self.save()
-
-
-class Deposit(models.Model):
-    goal = models.ForeignKey(SavingGoal, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    date = models.DateField()
-
-    def __str__(self):
-        return f"Deposit of {self.amount} to {self.goal} on {self.date}"
-
 
 class Transaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -40,15 +59,4 @@ class Transaction(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
-        # Automatically create a deposit if a saving goal is associated with the transaction
-        if self.saving_goal:
-            self.saving_goal.add_deposit(self.amount)
 
-
-class SavingsDeposit(models.Model):
-    goal = models.ForeignKey(SavingGoal, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    date = models.DateField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.amount}€ deposited for {self.goal.name} on {self.date}"

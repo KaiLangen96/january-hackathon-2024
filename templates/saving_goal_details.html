@@ -1,21 +1,80 @@
+{% extends 'base.html' %} {% load static %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/transactions.css' %}"
+/>
+{% endblock %} {% block content %}
 
+<div class="d-flex justify-content-between transaction-header">
+  <div>
+    <h1 class="mb-0">{{goal.name}}</h1>
+    <p class="text-secondary mb-0">Current goal transactions</p>
+  </div>
+  <div class="d-flex gap-4">
+    <div>
+      <div class="d-flex align-items-center">
+        <span>Target</span>
+        <i class="fa-solid fa-trophy text-warning ms-2"></i>
+      </div>
 
-{% extends 'base.html' %}
+      <h4 class="counter">{{goal.target_amount}}</h4>
+    </div>
+    <div>
+      <div class="d-flex align-items-center">
+        <span>Current</span>
+        <i class="fa-solid fa-dollar-sign text-success ms-2"></i>
+      </div>
 
-{% block content %}
-
-<h1>{{goal.name}}</h1>
-<h1>{{goal.target_amount}}</h1>
-<h1>{{goal.current_amount}}</h1>
-<ul>
-    {% for transaction in goal.saving_goal.all %}
-        <li>{{ transaction.amount }}</li>
-    {% endfor %}
-</ul>
-
+      <h4 class="text-success">{{goal.current_amount}}</h4>
+    </div>
+  </div>
+</div>
 <div id="chart"></div>
 
-
+<div class="row">
+  <div class="col-12 mb-3 mb-lg-5">
+    <div class="position-relative card table-nowrap table-card">
+      <div class="card-header align-items-center">
+        <h2 class="mb-0">{{goal.name}} Transaction History</h2>
+        <p class="mb-0 small text-muted">Latest transactions</p>
+      </div>
+      <div class="table-responsive">
+        <table class="table mb-0">
+          <thead class="small text-uppercase bg-body text-muted">
+            <tr>
+              <th>Transaction ID</th>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for transaction in goal.saving_goal.all %}
+            <tr class="align-middle">
+              <td>{{ transaction.id }}</td>
+              <td>{{ transaction.date }}</td>
+              <td>{{ transaction.description }}</td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <span><i class="fa fa-arrow-up" aria-hidden="true"></i></span>
+                  <span>${{ transaction.amount }}</span>
+                </div>
+              </td>
+              <td>
+                <span class="badge fs-6 fw-normal bg-tint-success text-success"
+                  >Completed</span
+                >
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 
@@ -23,22 +82,103 @@
     const CURRENT_AMOUNT = {{goal.current_amount}};
 
     const percentage = (CURRENT_AMOUNT / GOAL_AMOUNT) * 100;
+    const user = `{{request.user.username}}`
 
-    var options = {
+    const barOptions =  {
+        series: [{
+            name: user,
+            data: [44]
+      }, {
+        name: 'user 2',
+        data: [53]
+      }, {
+        name: 'user 3',
+        data: [12]
+      }, {
+        name: 'user 4',
+        data: [9]
+      }, {
+        name: 'user 5',
+        data: [25]
+      }],
+        chart: {
+        type: 'bar',
+        height: 350,
+        stacked: true,
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true,
+          dataLabels: {
+            total: {
+              enabled: true,
+              offsetX: 0,
+              style: {
+                fontSize: '13px',
+                fontWeight: 900
+              }
+            }
+          }
+        },
+      },
+      stroke: {
+        width: 1,
+        colors: ['#fff']
+      },
+      title: {
+        text: 'Fiction Books Sales'
+      },
+      xaxis: {
+        categories: [{{goal.target_amount}}],
+        labels: {
+          formatter: function (val) {
+            return '$' + val
+          }
+        }
+      },
+      yaxis: {
+        title: {
+          text: undefined
+        },
+        labels: {
+            formatter: function (val) {
+              return '$' + val
+            }
+          }
+      },
+      tooltip: {
+        y: {
+            formatter: function (val) {
+                return '$' + val
+            }
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      legend: {
+        position: 'top',
+        horizontalAlign: 'left',
+        offsetX: 40
+      }
+      };
+
+
+    const options = {
     chart: {
       height: 280,
       type: "radialBar",
     },
-  
+
     series: [percentage.toFixed(2)],
-  
+
     plotOptions: {
       radialBar: {
         hollow: {
           margin: 15,
           size: "70%",
         },
-  
+
         dataLabels: {
           showOn: "always",
           name: {
@@ -55,17 +195,19 @@
         },
       },
     },
-  
+
     stroke: {
       lineCap: "round",
     },
     labels: ["Progress"],
   };
-  
-  var chart = new ApexCharts(document.querySelector("#chart"), options);
-  
+
+  const barChart = new ApexCharts(document.querySelector("#chart"), barOptions);
+  const chart = new ApexCharts(document.querySelector("#chart"), options);
+
+
   chart.render();
-  
-  </script>
+  barChart.render()
+</script>
 
 {% endblock %}
