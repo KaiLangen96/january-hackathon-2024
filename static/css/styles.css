@@ -255,6 +255,36 @@ li {
   list-style-type: none
 }
 
+.gradient-about-left{
+  background: rgb(245,245,245);
+background: linear-gradient(90deg, rgba(245,245,245,1) 10%, rgba(245,245,245,0) 100%);
+}
+
+.gradient-about-right{
+  background: rgb(245,245,245);
+background: linear-gradient(270deg, rgba(245,245,245,1) 10%, rgba(245,245,245,0) 100%);
+}
+
+.left-col-slide{
+  opacity: 0;
+  animation: SlideLeft 2s linear 1s forwards;
+}
+
+.left-col-slide-delay{
+  opacity: 0;
+  animation: SlideLeft 2s linear 1.5s forwards;
+}
+
+.right-col-slide{
+  opacity: 0;
+  animation: SlideRight 2s linear 1s forwards;
+}
+
+.right-col-slide-delay{
+  opacity: 0;
+  animation: SlideRight 2s linear 1.5s forwards;
+}
+
 /* .contact-container {
    background-color: rgba( 255, 255, 255, 0.9);
    width: min(90%, 800px);
@@ -299,6 +329,16 @@ left:0;
 @keyframes Fade {
   0% {opacity: 0;}
   100% {opacity: 1;}
+}
+
+@keyframes SlideLeft{
+  0% {transform: translate(-400px);opacity: 0;}
+  100%{transform: translate(0px);opacity: 1;}
+}
+
+@keyframes SlideRight{
+  0% {transform: translate(400px);opacity: 0;}
+  100%{transform: translate(0px);opacity: 1;}
 }
 
 
