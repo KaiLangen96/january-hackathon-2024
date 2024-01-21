@@ -276,6 +276,14 @@ li {
   list-style-type: none
 }
 
+.form-group {
+  margin: 2rem;
+}
+
+.form-label {
+  display: block;
+}
+
 /* .contact-container {
    background-color: rgba( 255, 255, 255, 0.9);
    width: min(90%, 800px);
