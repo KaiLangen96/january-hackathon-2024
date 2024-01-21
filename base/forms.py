@@ -55,9 +55,16 @@ class SavingsDepositForm(forms.ModelForm):
         model = SavingsDeposit
         fields = ['amount']
 
+# SUBJECT_CHOICES = {
+#     "Issue",
+#     "Feedback",
+# }
+
+# , choices = SUBJECT_CHOICES
+
 
 class ContactForm(forms.Form):
-    name = forms.CharField(max_length=100, required=True)
-    email = forms.EmailField(validators=[EmailValidator(message="Invalid Email")])
-    subject = forms.CharField(max_length=100)
-    message = forms.CharField(widget=forms.Textarea)
+    name = forms.CharField(label="",max_length=100, required=True,widget=forms.TextInput(attrs={'placeholder': 'Your Name','class': 'my-2 w-50'}))
+    email = forms.EmailField(label="",validators=[EmailValidator(message="Invalid Email")],widget=forms.TextInput(attrs={'placeholder': 'Your Email','class': 'my-2 w-50'}))
+    subject = forms.CharField(label="",max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Subject','class': 'my-2 w-50'}))
+    message = forms.CharField(label="",widget= forms.Textarea(attrs={'placeholder': 'Message','class': 'my-2 w-50'}) )

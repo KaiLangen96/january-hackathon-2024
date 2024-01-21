@@ -198,13 +198,49 @@ a {
   color: #fff;
 }
 
-/* Contact form */
-.contact-text {
-  color: #fff;
+/* about page */
+.about-container{
+  background-color: rgba( 255, 255, 255, 0.9);
 }
+
+.about-list{
+  background-color: rgba(0, 0, 0, 0.0);
+}
+
+.about-container h6,
+.about-container h4{
+  font-weight: bold;
+}
+
+.logo {
+  animation: Fade 5s;
+}
+
+/* Contact form */
+/* .contact-text {
+  color: #fff;
+} */
 
 li {
   list-style-type: none
 }
 
+.contact-container {
+   background-color: rgba( 255, 255, 255, 0.9);
+   width: min(90%, 800px);
+}
+
+.contact-container .btn,
+.contact-container .btn:active {
+  color: rgb(255, 255, 255);
+  background-color: rgb(34, 34, 34) !important;
+  border-color: rgb(34, 34, 34) !important;
+  padding: 30px;
+}
+
+/* Keyframes */
+@keyframes Fade {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
 
