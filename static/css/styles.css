@@ -21,11 +21,18 @@ h1, h2, h3, h4, h5, h6 {
   margin: 2rem 1rem;
 
 }
+/*===============HOME PAGE========================*/
+
+/*===============Carousel styling========================*/
 .break-container{
   width:100vw;
   position:relative;
   left:calc(-1 * (100vw - 100%)/2);
 }
+.carousel-inner {
+  height: 100%; 
+}
+
 .carousel-item-text {
   position: absolute;
   bottom: 0;
@@ -36,21 +43,20 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   box-sizing: border-box;
 }
-
-.carousel-item-content img {
-  width: 448px;
-  height: 298.9px;
+.carousel-item {
+  position: relative;
+  height: 80vh;
+}
+.carousel-item img {
+  max-width: 100%;
+  height: auto; 
+  display: block;
 }
 
 .carousel-item-text h3,
 .carousel-item-text p {
-  margin: 0;
+  margin:0;
   
-}
-
-.carousel-item-content {
-  position: relative;
-  height:60%;
 }
 
 .carousel-buttons {
@@ -76,9 +82,10 @@ h1, h2, h3, h4, h5, h6 {
   background-color: rgba(0, 0, 0, 0.7);
   /* Darken the background on hover */
 }
-
+/*================HERO BLOCK==========================*/
 .hero-block {
   position: relative;
+  margin-top:40px;
 }
 
 .hero-block .btn {
@@ -101,10 +108,24 @@ h1, h2, h3, h4, h5, h6 {
   color: black;
 }
 
-.hero-image img {
-  max-width: 100%;
-  height: auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+@media screen and (min-width: 992px) {
+  .hero-image-wrapper{
+    display: flex;
+  align-items: center; 
+  justify-content: center;
+  height: 100vh;
+  }
+  .hero-image{
+    margin:10px;
+  }
+  .hero-image img{
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: block;
+  }
+
 }
 
 .add-info-block {
@@ -146,7 +167,7 @@ a {
   text-decoration: none;
 }
 
-/* login page */
+/*============ login page and sign up======== */
 .login-container {
   width: max(600px, 90%)
 }
@@ -259,7 +280,7 @@ li {
    background-color: rgba( 255, 255, 255, 0.9);
    width: min(90%, 800px);
 } */
-
+/*===========Contact Page and login Styling ========*/
 .contact-container .btn,
 .contact-container .btn:active,
 .login-container button {
