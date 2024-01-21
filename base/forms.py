@@ -9,6 +9,7 @@ class TransactionForm(forms.ModelForm):
         required=False,
         empty_label="Select a Saving Goal",
     )
+    
 
     class Meta:
         model = Transaction
@@ -49,6 +50,8 @@ class SavingGoalForm(forms.ModelForm):
         fields = ["name", "target_amount"]
 
 
+
+# REMOVE WHEN TRANSACTION FORM IS WORKING
 class SavingsDepositForm(forms.ModelForm):
     class Meta:
         model = SavingsDeposit

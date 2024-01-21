@@ -1,0 +1,16 @@
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{goal.name}}</h1>
+<h1>{{goal.target_amount}}</h1>
+<h1>{{goal.current_amount}}</h1>
+<ul>
+    {% for transaction in goal.saving_goal.all %}
+        <li>{{ transaction.amount }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
