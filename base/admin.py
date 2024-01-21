@@ -1,8 +1,17 @@
 from django.contrib import admin
-from .models import Category, Transaction, SavingGoal
-
+from django.contrib.auth.models import User
+from .models import Transaction, SavingGoal, Profile
 
 # Register your models here.
+
+class ProfileInline(admin.StackedInline):
+    """
+    Inline representation of user profiles for the admin panel.
+
+    """
+
+    model = Profile
+
 
 class TransactionInline(admin.TabularInline):
     """
@@ -14,14 +23,29 @@ class TransactionInline(admin.TabularInline):
     fields = ("amount", "date", "description")
     extra = 0
 
-
-
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class UserAdmin(admin.ModelAdmin):
     """
-    Admin model configuration for post categories.
+    Admin model configuration for user accounts.
+
+    This class defines the admin panel configuration for user accounts,
+    allowing administrators to manage user information such as username,
+    first name, last name, and email. It also includes an inline
+    representation of user profiles using the `ProfileInline` class
+
+    Example:
+        To use this admin configuration for user accounts:
+
+        admin.site.register(User, UserAdmin)
 
     """
+
+    model = User
+    fields = ("username", "first_name", "last_name", "email")
+    inlines = [ProfileInline]
+
+
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
 
 
 @admin.register(Transaction)
