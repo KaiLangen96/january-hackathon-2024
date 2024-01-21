@@ -2,57 +2,72 @@
 <!--  -->
 {% block content %}
 <!--  -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
+  </script>
 <script type="text/javascript">
-    (function() {
-        // https://dashboard.emailjs.com/admin/account
-        emailjs.init('KTp6qQT45uX7GNEbb');
-    })();
+  (function () {
+    
+    emailjs.init("pQJecQLuAywAFRl9x");
+  })();
 </script>
 <script type="text/javascript">
-    window.onload = function() {
+    function sendMail() {
         document.getElementById('contact-form').addEventListener('submit', function(event) {
             event.preventDefault();
-            // generate a five digit number for the contact_number variable
-            this.contact_number.value = Math.random() * 100000 | 0;
-            // these IDs from the previous steps
-            emailjs.sendForm( 'BB_Contact', 'bb_contact_form', this)
-                .then(function() {
-                    console.log('SUCCESS!');
-                }, function(error) {
-                    console.log('FAILED...', error);
-                });
+
+            emailjs.sendForm('service_54wv0da', 'template_3c987fp', '#contact-form')
+            .then(function() {
+                console.log('Success!');
+
+                let success = document.getElementById("sendButton");
+
+                let contactForm = document.getElementById('contact-form');
+
+                contactForm.reset();
+
+                success.innerHTML = "Successfully Sent!";
+
+                setInterval(() => window.location.reload(true), 3000)
+            }, function(error) {
+                console.log('Failed...', error);
+            });
         });
     }
+
 </script>
 <div class="contact-container container rounded my-3">
-    <div class="pt-3 text-center contact-text" >
-        <h1>Contact Page</h1>
-            <p>
-                Drop us a message if you are having any issues with the app or if you want to leave some feedback!
-            </p>
-            {% comment %} action="/contact/" method="post" {% endcomment %}
-            <form  id="contact-form">
-            {% csrf_token %}
-            {% for field in form %}
-                <div>
-                {{ field.errors }}
-                {{ field.label_tag }} {{ field }}
-                </div>
-            {% endfor %}
-
-            <button type="submit" class="btn btn-primary  my-2" value="submit">Send</button>
-            </form>
-    </div>
-    <div pt-3 text-center class="contact-text">
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </div>
+  <div class="pt-3 text-center contact-text">
+    <h1>Contact Page</h1>
+    <p>
+      Drop us a message if you are having any issues with the app or if you want
+      to leave some feedback!
+    </p>
+    
+    <form id="contact-form" role="form>
+      {% csrf_token %}
+      <div class="form-group">
+      <label class="form-label" for="user_name">Your Name:</label>
+      <input size="25" type="text" name="user_name" id="name" required />
+      </div>
+      <div class="form-group">
+      <label class="form-label" for="user_email">Your Email Address:</label>
+      <input size="25" type="email" name="user_email" id="email" data-rule="email" required/>
+      </div>
+      <div class="form-group">
+      <label class="form-label" for="subject">Message Subject:</label>
+      <input size="25" type="text" name="subject" id="subject"/>
+      </div>
+      <div class="form-group">
+      <label class="form-label" for="message">Message:</label>
+      <textarea rows="6" cols="30" name="message" rows="10" id="message" required></textarea>
+      </div>
+      <div>
+      <button class="btn btn-primary  my-2" id="sendButton" onclick='sendMail()' value="Send" type="submit">Send Message</button>
+      </div>
+    </form>
+  </div>
 </div>
 
 {%endblock%}
