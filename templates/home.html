@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 
-<article id="image-carousel" class="carousel slide" data-ride="carousel">
+<article id="image-carousel" class="carousel slide  break-container" data-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img src="static/images/carousel-images/piggybank.jpg" class="d-block w-100" alt="Image 1">
         <div class="carousel-item-text">
           <h3>Saving Made Easy</h3>
-          <p>Effortlessly save money with SlickSaver's intuitive features.</p>
+          <p>Effortlessly save money with BudgetBuddies' intuitive features.</p>
         </div>
       </div>
       <div class="carousel-item">
@@ -21,7 +21,7 @@
         <img src="static/images/carousel-images/happymoneyman.jpg" class="d-block w-100" alt="Image 3">
         <div class="carousel-item-text">
           <h3>Financial Wellness</h3>
-          <p>Experience financial wellness with SlickSaver's comprehensive tools.</p>
+          <p>Experience financial wellness with BudgetBuddies' comprehensive tools.</p>
         </div>
       </div>
     </div>
@@ -37,9 +37,12 @@
       </div>
 </article>
 
-<article class="container-fluid px-0 ">
+<article class="container-fluid px-0">
        <section class=" hero-block row text-center">
+
         <div class="row">
+          <div class="col-12 col-lg-6">
+            
             <h2 class="heading text-center mb-4">Welcome to Budget Buddies</h2>
             <br>
             <p>
@@ -53,16 +56,22 @@
             </p>
             <br>
             <br>
-            <a class="btn btn-primary btn-lg mx-auto text-center custom-width-btn" href="#" role="button">Get Started</a>
+            <a class="btn btn-primary btn-lg mx-auto text-center custom-width-btn" href="{% url 'account_signup' %}" role="button">Get Started</a>
             <br>
             <p class="text-success display-6"><i class="fa-solid fa-phone"></i> (+44)07566444111</p>
-        </div>
-            <div class="col-md-12">
-            <div class="hero-image">
-                <img src="static/images/web-images/piggybank-with-blue-sunglasses.jpg" alt="" class="img-fluid">
-            </div>
-        </div>
-    </section>
+          </div>
+
+            <div class="hero-image-wrapper col-12 col-md-6">
+              <div class="hero-image d-inline-block">
+                  <img src="static/images/web-images/piggybank-with-blue-sunglasses.jpg" alt="" class="img-fluid">
+              </div>
+             </div>
+    
+            </section>
+ 
+
+
+
     <section class="add-info-block text-center">
         <h2 class="heading text-center mb-4">Budget Buddies- Your Personal Finance Companion!</h2>
        <p>
@@ -75,7 +84,7 @@
         With Budget Buddies, you can effortlessly track your expenses, set savings goals, and receive personalized insights to optimize your financial health. Our user-friendly interface and secure platform ensure that your financial information remains safe and accessible at your fingertips.
        </p>
     </section>
-<section class=" my-5">
+<section class="digitize-sect break-container my-5">
     <div class="row">
         <div class="col-md-6">
             <img src="static/images/web-images/pigandphone-glass.jpg" alt="Digitize Your Budgeting" class="img-fluid">
@@ -92,7 +101,7 @@
         </div>
     </div>
 </section>
-    <section class="add-info-block">
+    <section class="add-info-block text-center align-content-center">
       <h2 class="heading text-center mb-4">
         Empowering You to Take Charge of Your Finances.
       </h2>
@@ -102,30 +111,41 @@
       <p>Join us on this journey towards financial well-being. Together, we can achieve your goals and dreams. Let Slick Saver be your trusted partner in making smart financial choices and securing a brighter future for yourself and your loved ones.
     </p>
     </section>
-    <section class="our-services">
+    <section class="our-services break-container text-center">
         <h2 class="heading text-center mb-4">
             Our Services
         </h2>
        <div class="d-flex justify-content-center">
-        <ul class="list-group list-group-flush star-list">
+       <div class="row">
+        <div class="col-12 col-md-6">
+          <ul class="list-group list-group-flush star-list">
             <li class="list-group-item bg-dark text-white border-0 fw-bold fs-5 my-2">Personalised Budgeting Strategies</li>
             <li class="list-group-item bg-dark text-white border-0 fw-bold fs-5 my-2">Expense Tracking Analysis</li>
             <li class="list-group-item bg-dark text-white border-0 fw-bold fs-5 my-2">Saving Goal Planning</li>
             <li class="list-group-item bg-dark text-white border-0 fw-bold fs-5 my-2">Wealth Management and Investment Advice</li>
             <li class="list-group-item bg-dark text-white border-0 fw-bold fs-5 my-2">Retirement and Pension Planning</li>
+        </ul>
+        </div>
+        <div class="col-12 col-md-6">
+          <ul class="list-group list-group-flush star-list">
             <li class="list-group-item bg-dark text-white border-0 fw-bold fs-5 my-2">Debt Management Solution</li>
             <li class="list-group-item bg-dark text-white border-0 fw-bold fs-5 my-2">Tax Planning and Preparation</li>
             <li class="list-group-item bg-dark text-white border-0 fw-bold fs-5 my-2">Insurance Solutions</li>
             <li class="list-group-item bg-dark text-white border-0 fw-bold fs-5 my-2">Newsletter for Financial Education</li>
             <li class="list-group-item bg-dark text-white border-0 fw-bold fs-5 my-2">Finance Workshop</li>
         </ul>
+        </div>
+       </div>
        </div>
     </section>
-    <section>
-        <h2 class="heading text-center mb-4">
-            Budget Buddies - Here to Assist with your savings and Budgeting
-        </h2>
-    </section>
+    <section class="assuring-text mb-5">
+      <h2 class="heading text-center font-weight-bold mb-4">
+          <span class="text-primary">Budget Buddies</span> - Here to Assist with your Savings and Budgeting
+      </h2>
+      <p class="text-center">
+          Your trusted partner in achieving financial well-being. We are here to make your savings and budgeting journey seamless and empowering. With our innovative tools and user-friendly platform, managing your finances has never been more interesting and effective.
+      </p>
+  </section>
 </article>
 
 {%endblock%}
