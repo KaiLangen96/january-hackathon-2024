@@ -203,14 +203,23 @@ a {
   background-color: rgba( 255, 255, 255, 0.9);
 }
 
-.about-container h6{
+.about-list{
+  background-color: rgba(0, 0, 0, 0.0);
+}
+
+.about-container h6,
+.about-container h4{
   font-weight: bold;
 }
 
-/* Contact form */
-.contact-text {
-  /* color: #fff; */
+.logo {
+  animation: Fade 5s;
 }
+
+/* Contact form */
+/* .contact-text {
+  color: #fff;
+} */
 
 li {
   list-style-type: none
@@ -229,4 +238,9 @@ li {
   padding: 30px;
 }
 
+/* Keyframes */
+@keyframes Fade {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
 
