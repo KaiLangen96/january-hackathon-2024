@@ -1,17 +1,16 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load allauth account %}
+
 {% block head_title %}
     {% trans "Sign In" %}
 {% endblock head_title %}
 {% block content %}
+<!---->
+<div class="container login-container text-center add-info-block my-3 ">
     {% element h1 %}
         {% trans "Sign In" %}
     {% endelement %}
-    <p>
-        {% blocktrans %}If you have not created an account yet, then please
-    <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
-    </p>
     {% url 'account_login' as login_url %}
     {% element form form=form method="post" action=login_url tags="entrance,login" %}
         {% slot body %}
@@ -33,4 +32,10 @@
     {% if SOCIALACCOUNT_ENABLED %}
         {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
     {% endif %}
+    <p >
+        {% blocktrans %}If you have not created an account yet, then please
+    <a class="text-success" href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
+    </p>
+</div>
 {% endblock content %}
+
