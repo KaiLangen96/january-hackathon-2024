@@ -52,8 +52,11 @@
 
 <div class='container text-center my-2'>
   <a class='btn btn-success text-uppercase' href="{% url 'add_savings_deposit' goal_pk=goal.pk %}">Deposit to {{goal.name}}!</a>
+
+  {% if user == goal.user %}
   <a class='btn btn-info text-uppercase' href="{% url 'update_saving_goal' pk=goal.pk %}">Update {{goal.name}}!</a>
   <a class='btn btn-danger text-uppercase' href="{% url 'delete_saving_goal' pk=goal.pk %}">Delete {{goal.name}}!</a>
+  {% endif %}
 </div>
 
 
