@@ -58,6 +58,8 @@ class SavingGoal(models.Model):
         else:
             return Decimal('0.00')
 
+    def unique_depositing_users_count(self):
+        return self.saving_goal.values('user').distinct().count()
 
 
 class Transaction(models.Model):
