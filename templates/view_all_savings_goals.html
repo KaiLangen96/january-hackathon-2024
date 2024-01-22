@@ -273,7 +273,7 @@
 
 
 <h3 class="h1 text-center" >Yours Goals</h3>
-
+<hr />
 {% for goal in user_goals %}
 
 <a href="{% url "saving_goal_details" goal_pk=goal.pk %}">
@@ -316,6 +316,8 @@
 {% endfor %}
 
 <h3 class="h1 text-center" >Buddy Goals</h3>
+<hr />
+
 
 {% for goal in friends_goals %}
 
