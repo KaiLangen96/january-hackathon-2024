@@ -31,12 +31,13 @@
               <tr>
                   <td>
                       <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="" />
-                      <a href="#" class="user-link text-capitalize">{{ friend.user.username }}</a>
-                      <span class="user-subhead">Admin</span>
+                      <p class="user-link text-capitalize text-primary m-0">{{ friend.user.username }}</p>
+                      <span class="user-subhead text-primary">Friend</span>
                   </td>
-                  <td>$1000</td>
+                  <td>${{ friend.total_saved_amount }}</td>
                   <td class="text-center">
-                      <span class="label label-default">Date</span>
+                      <span class="label label-default">{{ friend.user.date_joined|date:"F j, Y" }}
+                      </span>
                   </td>
                   <td>
                       <form method="post" action="{% url 'toggle_friend' %}" id="toggleFriendForm{{ friend.user.id }}">
@@ -81,12 +82,16 @@
                   <tr>
                       <td>
                           <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="" />
-                          <a href="#" class="user-link text-capitalize">{{ user.username }}</a>
-                          <span class="user-subhead">Admin</span>
+                          <p class="user-link text-capitalize text-primary m-0">{{ user.username }}</p>
+                          {% if user.is_superuser %}
+                          <span class="user-subhead ">Admin</span>
+                          {% endif %}
+
                       </td>
-                      <td>$1000</td>
+                      <td>${{ user.profile.total_saved_amount }}</td>
                       <td class="text-center">
-                          <span class="label label-default">Date</span>
+                          <span class="label label-default">{{ user.date_joined|date:"F j, Y" }}
+                          </span>
                       </td>
                       <td>
                           <form method="post" action="{% url 'toggle_friend' %}" id="toggleFriendForm{{ user.id }}">

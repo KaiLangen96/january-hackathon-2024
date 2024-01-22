@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
+from django.db.models import Sum
 from decimal import Decimal
 
 
@@ -15,9 +16,13 @@ class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     friends = models.ManyToManyField('self', blank=True)
 
+
     def __str__(self):
         """Return a string representation of the object (the post's title)."""
         return str(self.user)
+
+    def total_saved_amount(self):
+        return Transaction.objects.filter(user=self.user).aggregate(Sum('amount'))['amount__sum'] or 0
 
 def create_user_profile(instance, created, *args, **kwargs):
     """

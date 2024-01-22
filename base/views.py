@@ -304,25 +304,30 @@ def handler405(request, exception):
 class UsersListView(generic.View):
     """
     Basic homepage view.
-
     """
+
     template_name = "users_list.html"
 
     def get(self, request):
         """
         Basic Get view for the homepage.
-
         """
 
+        # Get all users
         all_users = User.objects.all()
-        user = request.user
+
+        # Calculate the total saved amount for each user in transactions
+        user_totals = []
+        for user in all_users:
+            total_saved = Transaction.objects.filter(user=user).aggregate(Sum('amount'))['amount__sum'] or 0
+            user_totals.append({"user": user, "total_saved": total_saved})
 
         context = {
             "all_users": all_users,
+            "user_totals": user_totals,
         }
 
         return render(request, self.template_name, context)
-
 
 @login_required
 @require_POST
