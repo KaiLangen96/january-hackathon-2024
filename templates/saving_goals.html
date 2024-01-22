@@ -3,13 +3,34 @@
 {% block content %}
   <h1>Saving Goals</h1>
 
-  <a href="{% url 'add_saving_goal' %}">Add New Goal</a>
+
+  <a href="{% url 'add_saving_goal' %}">
+
+  <div class='btn-primary btn text-white'><i class="fa-solid fa-plus"></i>
+    Add New Goal</div>
+  </a>
 
   {% for goal in goals %}
-  <a href="{% url "saving_goal_details" goal_pk=goal.pk %}">
-    <p>{{ goal.name }} - Target Amount: {{ goal.target_amount }}€ - Current Amount: {{ goal.current_amount }}€</p>
-    <a href="{% url 'update_saving_goal' pk=goal.pk %}">Update</a>
-    <a href="{% url 'add_savings_deposit' goal_pk=goal.pk %}">Add Deposit</a>
-  </a>
+  <div class="container py-4">
+    <article class="postcard dark blue glossy-border p-3">
+      <div class="saving-container d-flex flex-column flex-md-row justify-content-between">
+        <div class="goals-text mb-3 mb-md-0">
+          <a href="{% url 'saving_goal_details' goal_pk=goal.pk %}">
+            <p class="mb-0">
+              <span class="d-inline d-md-none">{{ goal.name | truncatechars:10 }}</span>
+              <span class="d-none d-md-inline">{{ goal.name }}</span>
+              - Target Amount: {{ goal.target_amount }}€ - Current Amount: {{ goal.current_amount }}€
+            </p>
+          </a>
+        </div>
+        <div class="save-buttons d-flex flex-row">
+          <a href="{% url 'update_saving_goal' pk=goal.pk %}" class="btn btn-outline-primary me-2">Update</a>
+          <a href="{% url 'add_savings_deposit' goal_pk=goal.pk %}" class="btn btn-outline-success">Add Deposit</a>
+        </div>
+      </div>
+    </article>
+  </div>
+  
   {% endfor %}
 {% endblock %}
+
