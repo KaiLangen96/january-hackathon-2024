@@ -81,7 +81,7 @@ class TrackerPageView(generic.View):
 
         # Calculate total amount saved for the user's goal by all
         total_amount_friends_saved = Transaction.objects.filter(saving_goal__in=all_goals)
-        total_amount_saved_user_by_friends = total_amount_friends_saved.aggregate(Sum('amount'))['amount__sum'] or 0
+        total_goals_amount = total_amount_friends_saved.aggregate(Sum('amount'))['amount__sum'] or 0
 
 
         print(total_amount_friends_saved)
@@ -98,8 +98,6 @@ class TrackerPageView(generic.View):
             user__in=friends_users,
         ).exclude(user=user).aggregate(Sum('amount'))['amount__sum'] or 0
 
-        # Combine into total_goals
-        total_goals_amount = total_amount_saved_user_goals + total_amount_saved_user_by_friends
 
         total_user_goals = all_goals.filter(user=user).count()
         total_friends_goals = all_goals.exclude(user=user).count()
