@@ -35,6 +35,15 @@ a:hover {
   background-color: #18151f;
 }
 
+.postcard.dark:hover {
+  background-color: #312e39;
+  transform: scale(0.99);
+  transition: transform 0.2s ease-in-out;
+}
+
+.postcard.dark:hover .postcard__text:before {
+  background: #312e39;
+}
 .postcard.light {
   background-color: #e1e5ea;
 }
@@ -220,10 +229,6 @@ a:hover {
 
 .postcard__tagbox .blue.play:hover {
   background: #0076bd;
-}
-
-.postcard .postcard__title:hover {
-  color: #0076bd;
 }
 
 .postcard .postcard__bar {

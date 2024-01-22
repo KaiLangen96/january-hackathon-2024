@@ -45,8 +45,20 @@
 				<ul class="postcard__tagbox">
 					<li class="tag__item"><i class="fas fa-bullseye me-2 text-success"></i>{{goal.target_amount}}</li>
 					<li class="tag__item"><i class="fas fa-dollar me-2 text-warning"></i>{{goal.current_amount}}</li>
+
           <li class="tag__item"><i class="fas fa-user me-2 text-primary"></i>1</li>
 				</ul>
+				<div class="progress mt-1" data-height="14" style="height: 14px">
+					<div
+					  class="progress-bar bg-success text-center"
+					  role="progressbar"
+					  data-width="{{goal.calculate_remaining_percentage}}%"
+					  aria-valuenow="{{goal.calculate_remaining_percentage}}"
+					  aria-valuemin="0"
+					  aria-valuemax="100"
+					  style="width: {{goal.calculate_remaining_percentage}}%"
+					>{{goal.calculate_remaining_percentage}}%</div>
+				  </div>
 			</div>
 		</article>
   </a>
