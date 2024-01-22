@@ -99,6 +99,7 @@
 
     const userDeposits = JSON.parse(document.querySelector('#userDeposits').textContent);
     const GOAL_AMOUNT = {{goal.target_amount}};
+    const GOAL_NAME = `{{goal.name}} Savings Goal`
     const CURRENT_AMOUNT = {{goal.current_amount}};
 
   
@@ -146,7 +147,7 @@
         colors: ['#fff']
       },
       title: {
-        text: 'Fiction Books Sales'
+        text: GOAL_NAME
       },
       xaxis: {
         categories: [{{goal.target_amount}}],
@@ -161,10 +162,11 @@
           text: undefined
         },
         labels: {
-            formatter: function (val) {
-              return '$' + val
-            }
+          formatter: function (val) {
+            return '$' + val
           }
+        },
+        max: {{goal.target_amount}} // Set y-axis maximum value to 10,000
       },
       tooltip: {
         y: {
