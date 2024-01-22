@@ -3,11 +3,47 @@
 
 
 {% block extra_css %}
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="{% static 'css/transactions.css' %}"
-/>
+
+<style>
+  .transaction-header {
+    background-color: #f9f9f9;
+    padding: 1rem 1.25rem;
+  }
+  
+  .card {
+    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+  }
+  
+  .avatar.sm {
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: 0.818125rem;
+  }
+  
+  .table-nowrap .table td,
+  .table-nowrap .table th {
+    white-space: nowrap;
+  }
+  
+  .table > :not(caption) > * > * {
+    padding: 0.75rem 1.25rem;
+    border-bottom-width: 1px;
+  }
+  
+  table th {
+    font-weight: 600;
+    background-color: #eeecfd !important;
+  }
+  
+  .fa-arrow-up {
+    color: #00ced1;
+  }
+  
+  .fa-arrow-down {
+    color: #ff00ff;
+  }
+  
+</style>
 {% endblock %} {% block content %}
 
 <div class="d-flex justify-content-between transaction-header">
@@ -52,6 +88,11 @@
 
 <div class='container text-center my-2'>
   <a class='btn btn-success text-uppercase' href="{% url 'add_savings_deposit' goal_pk=goal.pk %}">Deposit to {{goal.name}}!</a>
+
+  {% if user == goal.user %}
+  <a class='btn btn-info text-uppercase' href="{% url 'update_saving_goal' pk=goal.pk %}">Update {{goal.name}}!</a>
+  <a class='btn btn-danger text-uppercase' href="{% url 'delete_saving_goal' pk=goal.pk %}">Delete {{goal.name}}!</a>
+  {% endif %}
 </div>
 
 

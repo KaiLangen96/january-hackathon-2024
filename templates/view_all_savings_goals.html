@@ -1,17 +1,269 @@
 {% extends 'base.html' %}
 
-{% load static %} {% block extra_css %}
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="{% static 'css/view_all_savings_goals.css' %}"
-/>
+{% load static %} 
+
+{% block extra_css %}
+<style>
+	.dark {
+		background: #110f16;
+	  }
+	  
+	  .light {
+		background: #f3f5f7;
+	  }
+	  
+	  a,
+	  a:hover {
+		text-decoration: none;
+		transition: color 0.3s ease-in-out;
+	  }
+	  
+	  #pageHeaderTitle {
+		margin: 2rem 0;
+		text-transform: uppercase;
+		text-align: center;
+		font-size: 2.5rem;
+	  }
+	  
+	  /* Cards */
+	  .postcard {
+		flex-wrap: wrap;
+		display: flex;
+		box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
+		border-radius: 10px;
+		margin: 0 0 2rem 0;
+		overflow: hidden;
+		position: relative;
+		color: #ffffff;
+	  }
+	  
+	  .postcard.dark {
+		background-color: #18151f;
+	  }
+	  
+	  .postcard.dark:hover {
+		background-color: #312e39;
+		transform: scale(0.99);
+		transition: transform 0.2s ease-in-out;
+	  }
+	  
+	  .postcard.dark:hover .postcard__text:before {
+		background: #312e39;
+	  }
+	  .postcard.light {
+		background-color: #e1e5ea;
+	  }
+	  
+	  .postcard.dark .t-dark {
+		color: #18151f;
+	  }
+	  
+	  .postcard a {
+		color: inherit;
+	  }
+	  
+	  .postcard h1,
+	  .postcard .h1 {
+		margin-bottom: 0.5rem;
+		font-weight: 500;
+		line-height: 1.2;
+	  }
+	  
+	  .postcard .small {
+		font-size: 80%;
+	  }
+	  
+	  .postcard .postcard__title {
+		font-size: 1.75rem;
+	  }
+	  
+	  .postcard .postcard__img {
+		max-height: 180px;
+		width: 100%;
+		object-fit: cover;
+		position: relative;
+	  }
+	  
+	  .postcard .postcard__img_link {
+		display: contents;
+	  }
+	  
+	  .postcard .postcard__bar {
+		width: 50px;
+		height: 10px;
+		margin: 10px 0;
+		border-radius: 5px;
+		background-color: #424242;
+		transition: width 0.2s ease;
+	  }
+	  
+	  .postcard .postcard__text {
+		padding: 1.5rem;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+	  }
+	  
+	  .postcard .postcard__preview-txt {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		text-align: justify;
+		height: 100%;
+	  }
+	  
+	  .postcard .postcard__tagbox {
+		display: flex;
+		flex-flow: row wrap;
+		font-size: 14px;
+		margin: 20px 0 0 0;
+		padding: 0;
+		justify-content: center;
+	  }
+	  
+	  .postcard .postcard__tagbox .tag__item {
+		display: inline-block;
+		background: rgba(83, 83, 83, 0.4);
+		border-radius: 3px;
+		padding: 2.5px 10px;
+		margin: 0 5px 5px 0;
+		cursor: default;
+		user-select: none;
+		transition: background-color 0.3s;
+	  }
+	  
+	  .postcard .postcard__tagbox .tag__item:hover {
+		background: rgba(83, 83, 83, 0.8);
+	  }
+	  
+	  .postcard:before {
+		content: "";
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background-image: linear-gradient(-70deg, #424242, transparent 50%);
+		opacity: 1;
+		border-radius: 10px;
+	  }
+	  
+	  .postcard:hover .postcard__bar {
+		width: 100px;
+	  }
+	  
+	  @media screen and (min-width: 769px) {
+		.postcard {
+		  flex-wrap: inherit;
+		}
+	  
+		.postcard .postcard__title {
+		  font-size: 2rem;
+		}
+	  
+		.postcard .postcard__tagbox {
+		  justify-content: start;
+		}
+	  
+		.postcard .postcard__img {
+		  max-width: 300px;
+		  max-height: 100%;
+		  transition: transform 0.3s ease;
+		}
+	  
+		.postcard .postcard__text {
+		  padding: 3rem;
+		  width: 100%;
+		}
+	  
+		.postcard .media.postcard__text:before {
+		  content: "";
+		  position: absolute;
+		  display: block;
+		  background: #18151f;
+		  top: -20%;
+		  height: 130%;
+		  width: 55px;
+		}
+	  
+		.postcard:hover .postcard__img {
+		  transform: scale(1.1);
+		}
+	  
+		.postcard:nth-child(2n + 1) {
+		  flex-direction: row;
+		}
+	  
+		.postcard:nth-child(2n + 0) {
+		  flex-direction: row-reverse;
+		}
+	  
+		.postcard:nth-child(2n + 1) .postcard__text:before {
+		  left: -12px !important;
+		  transform: rotate(4deg);
+		}
+	  
+		.postcard:nth-child(2n + 0) .postcard__text:before {
+		  right: -12px !important;
+		  transform: rotate(-4deg);
+		}
+	  }
+	  
+	  @media screen and (min-width: 1024px) {
+		.postcard .postcard__text {
+		  padding: 2rem 3.5rem;
+		}
+	  
+		.postcard .postcard__text:before {
+		  content: "";
+		  position: absolute;
+		  display: block;
+		  top: -20%;
+		  height: 130%;
+		  width: 55px;
+		}
+	  
+		.postcard.dark .postcard__text:before {
+		  background: #18151f;
+		}
+	  
+		.postcard.light .postcard__text:before {
+		  background: #e1e5ea;
+		}
+	  }
+	  
+	  /* COLORS */
+	  
+	  .postcard__tagbox .blue.play:hover {
+		background: #0076bd;
+	  }
+	  
+	  .postcard .postcard__bar {
+		background-color: #0076bd;
+	  }
+	  
+	  .blue:before {
+		background-image: linear-gradient(
+		  -30deg,
+		  rgba(0, 118, 189, 0.1),
+		  transparent 50%
+		);
+	  }
+	  
+	  .blue:nth-child(2n)::before {
+		background-image: linear-gradient(
+		  30deg,
+		  rgba(0, 118, 189, 0.1),
+		  transparent 50%
+		);
+	  }
+	  
+</style>
 {% endblock %}
 
 {% block content %}
-<h1 class="h1 text-center" id="pageHeaderTitle">All Buddy Goals</h1>
+<h1 class="h1 text-center text-primary" id="pageHeaderTitle">All Goals</h1>
 
-<div class='container text-center'>
+<div class='container text-center my-5'>
 
   <a href="{% url 'add_saving_goal' %}">
     <div class='btn-primary btn text-white'><i class="fa-solid fa-plus"></i>
@@ -20,48 +272,94 @@
 </div>
 
 
+<h3 class="h1 text-center" >Yours Goals</h3>
+<hr />
+{% for goal in user_goals %}
 
-{% for goal in goals  %}
-	<div class="container py-4">
+<a href="{% url "saving_goal_details" goal_pk=goal.pk %}">
 
-    <a href="{% url "saving_goal_details" goal_pk=goal.pk %}">
+	<article class="postcard dark blue">
+	<img class="postcard__img" src="https://raw.githubusercontent.com/DarrachBarneveld/january-hackathon-2024/main/static/images/savings.webp" alt="Image Title" />
+		<div class="postcard__text">
+			<h1 class="postcard__title blue">{{goal.name}}</h1>
+	<h2 class="h4">{{goal.user.username}}</h2>
 
-		<article class="postcard dark blue">
-        <img class="postcard__img" src="{% static 'images/savings.webp' %}" alt="Image Title" />
-			<div class="postcard__text">
-				<h1 class="postcard__title blue">{{goal.name}}</h1>
-        <h2 class="h4">{{goal.user.username}}</h2>
-
-        
-				<div class="postcard__subtitle small blue">
-					<time datetime="2020-05-25 12:00:00">
-						<i class="fas fa-calendar-alt me-2"></i>{{goal.created_at}}
-					</time>
-				</div>
-				<div class="postcard__bar"></div>
-			
-				<ul class="postcard__tagbox">
-					<li class="tag__item"><i class="fas fa-bullseye me-2 text-success"></i>{{goal.target_amount}}</li>
-					<li class="tag__item"><i class="fas fa-dollar me-2 text-warning"></i>{{goal.current_amount}}</li>
-
-          <li class="tag__item"><i class="fas fa-user me-2 text-primary"></i>{{ goal.unique_depositing_users_count }}</li>
-				</ul>
-				<div class="progress mt-1" data-height="14" style="height: 14px">
-					<div
-					  class="progress-bar bg-success text-center"
-					  role="progressbar"
-					  data-width="{{goal.calculate_remaining_percentage}}%"
-					  aria-valuenow="{{goal.calculate_remaining_percentage}}"
-					  aria-valuemin="0"
-					  aria-valuemax="100"
-					  style="width: {{goal.calculate_remaining_percentage}}%"
-					>{{goal.calculate_remaining_percentage}}%</div>
-				  </div>
+	
+			<div class="postcard__subtitle small blue">
+				<time datetime="2020-05-25 12:00:00">
+					<i class="fas fa-calendar-alt me-2"></i>{{goal.created_at}}
+				</time>
 			</div>
-		</article>
-  </a>
+			<div class="postcard__bar"></div>
+		
+			<ul class="postcard__tagbox">
+				<li class="tag__item"><i class="fas fa-bullseye me-2 text-success"></i>{{goal.target_amount}}</li>
+				<li class="tag__item"><i class="fas fa-dollar me-2 text-warning"></i>{{goal.current_amount}}</li>
 
-    {% endfor %}
+	  <li class="tag__item"><i class="fas fa-user me-2 text-primary"></i>{{ goal.unique_depositing_users_count }}</li>
+			</ul>
+			<div class="progress mt-1" data-height="14" style="height: 14px">
+				<div
+				  class="progress-bar bg-success text-center"
+				  role="progressbar"
+				  data-width="{{goal.calculate_remaining_percentage}}%"
+				  aria-valuenow="{{goal.calculate_remaining_percentage}}"
+				  aria-valuemin="0"
+				  aria-valuemax="100"
+				  style="width: {{goal.calculate_remaining_percentage}}%"
+				>{{goal.calculate_remaining_percentage}}%</div>
+			  </div>
+		</div>
+	</article>
+</a>
+
+{% endfor %}
+
+<h3 class="h1 text-center" >Buddy Goals</h3>
+<hr />
+
+
+{% for goal in friends_goals %}
+
+<a href="{% url "saving_goal_details" goal_pk=goal.pk %}">
+
+	<article class="postcard dark blue">
+	<img class="postcard__img" src="https://raw.githubusercontent.com/DarrachBarneveld/january-hackathon-2024/main/static/images/savings.webp" alt="Image Title" />
+		<div class="postcard__text">
+			<h1 class="postcard__title blue">{{goal.name}}</h1>
+	<h2 class="h4">{{goal.user.username}}</h2>
+
+	
+			<div class="postcard__subtitle small blue">
+				<time datetime="2020-05-25 12:00:00">
+					<i class="fas fa-calendar-alt me-2"></i>{{goal.created_at}}
+				</time>
+			</div>
+			<div class="postcard__bar"></div>
+		
+			<ul class="postcard__tagbox">
+				<li class="tag__item"><i class="fas fa-bullseye me-2 text-success"></i>{{goal.target_amount}}</li>
+				<li class="tag__item"><i class="fas fa-dollar me-2 text-warning"></i>{{goal.current_amount}}</li>
+
+	  <li class="tag__item"><i class="fas fa-user me-2 text-primary"></i>{{ goal.unique_depositing_users_count }}</li>
+			</ul>
+			<div class="progress mt-1" data-height="14" style="height: 14px">
+				<div
+				  class="progress-bar bg-success text-center"
+				  role="progressbar"
+				  data-width="{{goal.calculate_remaining_percentage}}%"
+				  aria-valuenow="{{goal.calculate_remaining_percentage}}"
+				  aria-valuemin="0"
+				  aria-valuemax="100"
+				  style="width: {{goal.calculate_remaining_percentage}}%"
+				>{{goal.calculate_remaining_percentage}}%</div>
+			  </div>
+		</div>
+	</article>
+</a>
+
+{% endfor %}
+
 
 
 {% endblock %}

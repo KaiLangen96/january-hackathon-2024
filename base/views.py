@@ -1,23 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
-from django.utils import timezone
-from django.db.models import Sum,  Q, Count
-from django.db import models
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_POST
-from django.contrib.auth.mixins import UserPassesTestMixin
-from django.views.generic.edit import UpdateView, DeleteView
-from django.urls import reverse_lazy
-from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseRedirect
+from django.utils import timezone
+from django.db.models import Sum
+from django.db import models
 from django.contrib import messages
-from decimal import Decimal
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
-
-
+from django.core.exceptions import PermissionDenied
 
 from .models import Transaction, SavingGoal, Profile
 from .forms import TransactionForm, SavingGoalForm, ContactForm
@@ -39,8 +33,6 @@ def add_savings_deposit(request, goal_pk):
         form = TransactionForm(request.user)
 
     return render(request, template_name, {"form": form, "goal": goal})
-
-
 
 
 class HomePageView(generic.View):
@@ -139,8 +131,16 @@ class AllSavingsGoalsListView(LoginRequiredMixin, generic.ListView):
             models.Q(user=user_profile.user) | models.Q(user__in=friends_users)
         )
 
-        return all_goals
+        # Separate the goals into two groups: user's goals and friends' goals
+        user_goals = all_goals.filter(user=user_profile.user)
+        friends_goals = all_goals.exclude(user=user_profile.user)
 
+        return user_goals, friends_goals
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_goals'], context['friends_goals'] = self.get_queryset()
+        return context
 
 
 class AboutPageView(generic.View):
@@ -179,7 +179,6 @@ class ContactPageView(generic.View):
         )
 
 
-
 class SavingGoalDetailsView(LoginRequiredMixin, generic.View):
     template_name = "saving_goal_details.html"
 
@@ -216,6 +215,7 @@ class SavingGoalDetailsView(LoginRequiredMixin, generic.View):
 
         return render(request, self.template_name, context)
 
+
 class SavingGoalsListView(LoginRequiredMixin, generic.ListView):
     model = SavingGoal
     template_name = "saving_goals.html"
@@ -247,6 +247,11 @@ def update_saving_goal(request, pk):
     template_name = "update_saving_goal.html"
     goal = get_object_or_404(SavingGoal, pk=pk)
 
+    # Check if the user is the creator of the saving goal
+    if request.user != goal.user:
+        # If not the creator, raise a PermissionDenied exception
+        raise PermissionDenied
+
     if request.method == "POST":
         form = SavingGoalForm(request.POST, instance=goal)
         if form.is_valid():
@@ -257,11 +262,22 @@ def update_saving_goal(request, pk):
 
     return render(request, template_name, {"form": form, "goal": goal})
 
+    
+@login_required
+def delete_saving_goal(request, pk):
+    template_name = "saving_goal_confirm_delete.html"
+    saving_goal = get_object_or_404(SavingGoal, pk=pk)
 
-class SavingGoalDeleteView(DeleteView):
-    model = SavingGoal
-    success_url = reverse_lazy('/')  # Redirect to the transaction list after deletion
-    template_name = 'saving_goal_confirm_delete.html'  # Create this template if it doesn't exist
+    # Check if the user is the creator of the saving goal
+    if request.user != saving_goal.user:
+        # If not the creator, raise a PermissionDenied exception
+        raise PermissionDenied
+
+    if request.method == 'POST':
+        saving_goal.delete()
+        return redirect('saving_goals')  # Redirect to the saving goals after deletion
+
+    return render(request, template_name, {'saving_goal': saving_goal})
 
 
 def contact(request):

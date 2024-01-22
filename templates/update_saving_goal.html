@@ -7,5 +7,13 @@
     {{ form.as_p }}
     <button type="submit">Update Goal</button>
   </form>
-  <a href="{% url 'saving_goals' %}">Cancel</a>
+  <button type="button" onclick="goBack()">Cancel</button>
+{% endblock %}
+
+{% block postloadjs %}
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>
 {% endblock %}
