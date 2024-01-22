@@ -261,9 +261,9 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="h1 text-center" id="pageHeaderTitle">All Buddy Goals</h1>
+<h1 class="h1 text-center text-primary" id="pageHeaderTitle">All Goals</h1>
 
-<div class='container text-center'>
+<div class='container text-center my-5'>
 
   <a href="{% url 'add_saving_goal' %}">
     <div class='btn-primary btn text-white'><i class="fa-solid fa-plus"></i>
@@ -272,48 +272,94 @@
 </div>
 
 
+<h3 class="h1 text-center" >Yours Goals</h3>
+<hr />
+{% for goal in user_goals %}
 
-{% for goal in goals  %}
-	<div class="container py-4">
+<a href="{% url "saving_goal_details" goal_pk=goal.pk %}">
 
-    <a href="{% url "saving_goal_details" goal_pk=goal.pk %}">
+	<article class="postcard dark blue">
+	<img class="postcard__img" src="https://raw.githubusercontent.com/DarrachBarneveld/january-hackathon-2024/main/static/images/savings.webp" alt="Image Title" />
+		<div class="postcard__text">
+			<h1 class="postcard__title blue">{{goal.name}}</h1>
+	<h2 class="h4">{{goal.user.username}}</h2>
 
-		<article class="postcard dark blue">
-        <img class="postcard__img" src="https://raw.githubusercontent.com/DarrachBarneveld/january-hackathon-2024/main/static/images/savings.webp" alt="Image Title" />
-			<div class="postcard__text">
-				<h1 class="postcard__title blue">{{goal.name}}</h1>
-        <h2 class="h4">{{goal.user.username}}</h2>
-
-        
-				<div class="postcard__subtitle small blue">
-					<time datetime="2020-05-25 12:00:00">
-						<i class="fas fa-calendar-alt me-2"></i>{{goal.created_at}}
-					</time>
-				</div>
-				<div class="postcard__bar"></div>
-			
-				<ul class="postcard__tagbox">
-					<li class="tag__item"><i class="fas fa-bullseye me-2 text-success"></i>{{goal.target_amount}}</li>
-					<li class="tag__item"><i class="fas fa-dollar me-2 text-warning"></i>{{goal.current_amount}}</li>
-
-          <li class="tag__item"><i class="fas fa-user me-2 text-primary"></i>{{ goal.unique_depositing_users_count }}</li>
-				</ul>
-				<div class="progress mt-1" data-height="14" style="height: 14px">
-					<div
-					  class="progress-bar bg-success text-center"
-					  role="progressbar"
-					  data-width="{{goal.calculate_remaining_percentage}}%"
-					  aria-valuenow="{{goal.calculate_remaining_percentage}}"
-					  aria-valuemin="0"
-					  aria-valuemax="100"
-					  style="width: {{goal.calculate_remaining_percentage}}%"
-					>{{goal.calculate_remaining_percentage}}%</div>
-				  </div>
+	
+			<div class="postcard__subtitle small blue">
+				<time datetime="2020-05-25 12:00:00">
+					<i class="fas fa-calendar-alt me-2"></i>{{goal.created_at}}
+				</time>
 			</div>
-		</article>
-  </a>
+			<div class="postcard__bar"></div>
+		
+			<ul class="postcard__tagbox">
+				<li class="tag__item"><i class="fas fa-bullseye me-2 text-success"></i>{{goal.target_amount}}</li>
+				<li class="tag__item"><i class="fas fa-dollar me-2 text-warning"></i>{{goal.current_amount}}</li>
 
-    {% endfor %}
+	  <li class="tag__item"><i class="fas fa-user me-2 text-primary"></i>{{ goal.unique_depositing_users_count }}</li>
+			</ul>
+			<div class="progress mt-1" data-height="14" style="height: 14px">
+				<div
+				  class="progress-bar bg-success text-center"
+				  role="progressbar"
+				  data-width="{{goal.calculate_remaining_percentage}}%"
+				  aria-valuenow="{{goal.calculate_remaining_percentage}}"
+				  aria-valuemin="0"
+				  aria-valuemax="100"
+				  style="width: {{goal.calculate_remaining_percentage}}%"
+				>{{goal.calculate_remaining_percentage}}%</div>
+			  </div>
+		</div>
+	</article>
+</a>
+
+{% endfor %}
+
+<h3 class="h1 text-center" >Buddy Goals</h3>
+<hr />
+
+
+{% for goal in friends_goals %}
+
+<a href="{% url "saving_goal_details" goal_pk=goal.pk %}">
+
+	<article class="postcard dark blue">
+	<img class="postcard__img" src="https://raw.githubusercontent.com/DarrachBarneveld/january-hackathon-2024/main/static/images/savings.webp" alt="Image Title" />
+		<div class="postcard__text">
+			<h1 class="postcard__title blue">{{goal.name}}</h1>
+	<h2 class="h4">{{goal.user.username}}</h2>
+
+	
+			<div class="postcard__subtitle small blue">
+				<time datetime="2020-05-25 12:00:00">
+					<i class="fas fa-calendar-alt me-2"></i>{{goal.created_at}}
+				</time>
+			</div>
+			<div class="postcard__bar"></div>
+		
+			<ul class="postcard__tagbox">
+				<li class="tag__item"><i class="fas fa-bullseye me-2 text-success"></i>{{goal.target_amount}}</li>
+				<li class="tag__item"><i class="fas fa-dollar me-2 text-warning"></i>{{goal.current_amount}}</li>
+
+	  <li class="tag__item"><i class="fas fa-user me-2 text-primary"></i>{{ goal.unique_depositing_users_count }}</li>
+			</ul>
+			<div class="progress mt-1" data-height="14" style="height: 14px">
+				<div
+				  class="progress-bar bg-success text-center"
+				  role="progressbar"
+				  data-width="{{goal.calculate_remaining_percentage}}%"
+				  aria-valuenow="{{goal.calculate_remaining_percentage}}"
+				  aria-valuemin="0"
+				  aria-valuemax="100"
+				  style="width: {{goal.calculate_remaining_percentage}}%"
+				>{{goal.calculate_remaining_percentage}}%</div>
+			  </div>
+		</div>
+	</article>
+</a>
+
+{% endfor %}
+
 
 
 {% endblock %}

@@ -131,7 +131,16 @@ class AllSavingsGoalsListView(LoginRequiredMixin, generic.ListView):
             models.Q(user=user_profile.user) | models.Q(user__in=friends_users)
         )
 
-        return all_goals
+        # Separate the goals into two groups: user's goals and friends' goals
+        user_goals = all_goals.filter(user=user_profile.user)
+        friends_goals = all_goals.exclude(user=user_profile.user)
+
+        return user_goals, friends_goals
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_goals'], context['friends_goals'] = self.get_queryset()
+        return context
 
 
 class AboutPageView(generic.View):
