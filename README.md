@@ -1,12 +1,13 @@
+# Web-site Credentials
+
+ - Username = admin
+ - Password = janhack
+
 # Budget Buddies
 
 Budget Buddies is your one stop shop to achieving savings goals, we provide a singular destination for you to add savings goals, track their progress, get tips to manage your finances and turn savings into a social experience! 
 
 We want to make it simple and easy for you to benefit from the 50,30,20 savings technique. we want to colour code your needs, wants and savings into a handy chart so you can see where best to cut back and get those dreams!
-
-<div align="center">
-  <img src="" alt="">
-</div>
 
 ## Features 
 
@@ -73,24 +74,15 @@ We want to make it simple and easy for you to benefit from the 50,30,20 savings 
   <img src="./ReadmeImages/Footer.png" alt="Footer">
 </div>
 
-## Testing 
-
-### Validator Testing 
-
-- HTML
-  - No errors were returned when passing through the official [W3C validator](https://validator.w3.org/nu/?doc=https%3A%2F%2Fcode-institute-org.github.io%2Flove-running-2.0%2Findex.html)
-- CSS
-  - No errors were found when passing through the official [(Jigsaw) validator](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fvalidator.w3.org%2Fnu%2F%3Fdoc%3Dhttps%253A%252F%252Fcode-institute-org.github.io%252Flove-running-2.0%252Findex.html&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en#css)
-
-### Unfixed Bugs
-
-You will need to mention unfixed bugs and why they were not fixed. This section should include shortcomings of the frameworks or technologies used. Although time can be a big variable to consider, paucity of time and difficulty understanding implementation is not a valid reason to leave bugs unfixed. 
-
 ## Deployment
 
 - The site was deployed to Heroku app
 
 The live link can be found [HERE](https://janhack-5dc055031240.herokuapp.com/)
+
+# Wireframes
+
+ - Wireframes can be found [HERE](https://github.com/KaiLangen96/january-hackathon-2024/blob/main/ReadmeImages/Wireframes.pdf)
 
 # Technologies Used
 
