@@ -1,215 +1,96 @@
-<div align="center">
-  <img src="" alt="Home Page">
-</div>
+# Budget Buddies
 
+Budget Buddies is your one stop shop to achieving savings goals, we provide a singular destination for you to add savings goals, track their progress, get tips to manage your finances and turn savings into a social experience! 
 
-## Table of Contents
-
-1.  <details open>
-        <summary><a href="#ux">UX</a></summary>
-
-      <ul>
-      <li><details>
-      <summary><a href="#goals">Goals</a></summary>
-
-      - [Visitor Goals](#visitor-goals)
-      - [User Stories](#user-stories)
-      </details></li>
-
-      <li><details>
-      <summary><a href="#visual-design">Visual Design</a></summary>
-
-      - [Wireframes](#wireframes)
-      - [Fonts](#fonts)
-      - [Icons](#icons)
-      - [Colors](#colors)
-      </details></li>
-      </ul>
-
-    </details>
-
-2.  <details open>
-        <summary><a href="#features">Features</a></summary>
-
-      <ul>
-      <li><details>
-      <summary><a href="#page-elements">Page Elements</a></summary>
-
-      - [All Pages](#all-pages)
-      - [Index Page](#index-page)
-      - [About Page](#about-page)
-      - [Contact Page](#contact-page)
-      </details></li>
-
-      <li><details>
-      <summary><a href="#feature-ideas">Feature Ideas</a></summary>
-
-      - [Basic](#basic)
-      - [Content](#content)
-      </details></li>
-      </ul>
-
-    </details>
-
-3.  <details open>
-        <summary><a href="#technologies-used">Technologies Used</a></summary>
-
-      - [Languages](#languages)
-      - [Frameworks](#frameworks)
-      - [Libraries](#libraries)
-      - [APIs](#apis)
-      - [Platforms](#platforms)
-      - [Other Tools](#other-tools)
-
-    </details>
-
-4.  <details open>
-        <summary><a href="#testing">Testing</a></summary>
-
-      <ul>
-      <li><details>
-      <summary><a href="#methods">Methods</a></summary>
-
-      - [Validation](#validation)
-      - [Manual Testing](#manual-testing)
-      </details></li>
-
-      <li><details>
-      <summary><a href="#bugs">Bugs</a></summary>
-
-      - [Known Bugs](#known-bugs)
-      - [Fixed Bugs](#fixed-bugs)
-      </details></li>
-      </ul>
-
-    </details>
-
-5. <a href="#deployment">Deployment</a>
-
-6.  <details open>
-        <summary><a href="#credits">Credits</a></summary>
-
-      - [Images](#images)
-      - [Writing](#writing)
-      
-    </details>
-
-7. <a href="#contributors">Contributors</a>
-
----
-
-# UX
-
-## Goals
-
-### Visitor Goals
-
-User goals are:
-
-- 
-
-### User Stories
-
-1. 
-
-## Visual Design
-
-### Wireframes
-
-Wireframes: To see the wireframes created at the UX stage [Click Here!]()
-
-### Fonts
+We want to make it simple and easy for you to benefit from the 50,30,20 savings technique. we want to colour code your needs, wants and savings into a handy chart so you can see where best to cut back and get those dreams!
 
 <div align="center">
-  <img src="" alt="Font">
-</div>
-<div align="center">
-  <img src="" alt="Font">
+  <img src="" alt="">
 </div>
 
-- The primary font, [xxxxx]() was chosen because.....
-- The secondary font, [xxxxxx]() was chosen because....
+## Features 
 
-### Icons
+### Existing Features
 
-<div align="center">
-  <img src="./Readme_Images/HolyFavicons.png" alt="Icons">
-</div>
+- __Navigation Bar__
 
-- Icons are taken from the [Fontawesome](https://fontawesome.com/) Icon library and are utilised as classes in the `<i>` tag.
-- As they are utilised as classes, they can easily be styled using other classes or IDs in the same tag. I often used Bootstrap classes to style them uniformly.
-- Icons are utilised as decoration for the page, adding flair to buttons that convey meaning as to their purpose secondary to the text description, an icon is often recognised quicker than what we read so this give a more fluid user experience when navigating the site
-
----
-
-# Features
-
-## Page Elements
-
-### All Pages
-
-#### Navbar
+  - Made in Django This allows the user to access all areas of the website
 
 <div align="center">
-  <img src="" alt="Medium Header">
-  <img src="" alt="Small Header">
+  <img src="./ReadmeImages/NavBar.png" alt="Navigation">
 </div>
 
-- The Navbar is simple, providing only four options, the home page so the user can always access the landing page if they wish, an about page detailing the origin and expertise of HolyRecipes, a contact page if the user has any needs they want to convery to HolyRecipes and a search box so the user can look for all the recipes on the sites using any parameter they wish
-- The Logo is always highlighted, swapping size as necessary depending on device size.
-- On smaller devices, the menu becomes collapsible.
-- The mobile nav button has been placed to the right for ease of use with one hand.
-- The navbar is fixed so it is visible no matter how far you scroll.
+- __Register and Login Pages__
 
-#### Footer
+  - The user can register to have an account they can use to store their data and access it later and any time on any device
 
 <div align="center">
-  <img src="" alt="Footer">
+  <img src="./ReadmeImages/Register.png" alt="Register and Login Pages">
+  <img src="./ReadmeImages/SignIn.png" alt="Register and Login Pages">
 </div>
 
-#### Feature
+- __Home/Landing Page__
 
--
-
-### Index Page
-
-#### Carousel
+  - The main page features a prominent hero carousel 
+  - Below that is further information on what Budget Buddies do and why to register 
 
 <div align="center">
-  <img src="" alt="Carousel Gif">
+  <img src="./ReadmeImages/Home.png" alt="Home">
 </div>
 
+- __About Page__
 
-
-### About Page
+  - This section shows Budget Buddies mission
+  - This prominently displays all our features
 
 <div align="center">
-  <img src="" alt="About">
+  <img src="./ReadmeImages/About.png" alt="About">
 </div>
 
--
+- __Tracking__
 
-### Contact Page
+  - This section allows the user to add a goal and keep it updated
+  - This shows the users goals and how far along they have come to acheiving them
 
 <div align="center">
-  <img src="" alt="Contact Page">
+  <img src="./ReadmeImages/Tracker.png" alt="Tracking">
 </div>
 
-- A friendly and welcoming page that invites questions and uses [EmailJS](https://www.emailjs.com/) to send the emails.
-- The form has validation and is fully responsive.
-- Once the send button is pressed, a message will appear letting the user know if the message is successful or has failed
+- __Contact__
 
-## Feature Ideas
+  - A simple contact form using emailJS functionality that delivers a success or fail message to the user when they submit
 
-### Basic
+<div align="center">
+  <img src="./ReadmeImages/Contact.png" alt="Contact">
+</div>
 
-- 
+- __The Footer__ 
 
-### Content
+  - The footer section includes links to the relevant social media sites for Budget Buddies. The links will open to a new tab to allow easy navigation for the user. 
+  - The footer is valuable to the user as it encourages them to keep connected via social media
 
-- 
+<div align="center">
+  <img src="./ReadmeImages/Footer.png" alt="Footer">
+</div>
 
----
+## Testing 
+
+### Validator Testing 
+
+- HTML
+  - No errors were returned when passing through the official [W3C validator](https://validator.w3.org/nu/?doc=https%3A%2F%2Fcode-institute-org.github.io%2Flove-running-2.0%2Findex.html)
+- CSS
+  - No errors were found when passing through the official [(Jigsaw) validator](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fvalidator.w3.org%2Fnu%2F%3Fdoc%3Dhttps%253A%252F%252Fcode-institute-org.github.io%252Flove-running-2.0%252Findex.html&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en#css)
+
+### Unfixed Bugs
+
+You will need to mention unfixed bugs and why they were not fixed. This section should include shortcomings of the frameworks or technologies used. Although time can be a big variable to consider, paucity of time and difficulty understanding implementation is not a valid reason to leave bugs unfixed. 
+
+## Deployment
+
+- The site was deployed to Heroku app
+
+The live link can be found [HERE](https://janhack-5dc055031240.herokuapp.com/)
 
 # Technologies Used
 
@@ -226,6 +107,8 @@ Wireframes: To see the wireframes created at the UX stage [Click Here!]()
 
 - [Bootstrap 5](https://getbootstrap.com/)
   - Used for basic styles and outline.
+- [Django](https://www.djangoproject.com/) 
+  - Used to rapidly build the website with models
 
 ## Libraries
 
@@ -252,67 +135,16 @@ Wireframes: To see the wireframes created at the UX stage [Click Here!]()
 
 - [Balsamiq](https://balsamiq.com/)
   - To create wireframes.
-- [Favicon Generator](https://www.favicon-generator.org/)
-  - Favicons
-- [Coolors](https://coolors.co/)
-  - Creating color pallettes.
 
----
+## Credits 
 
-# Testing
+### Content 
 
-## Methods
+- The text for the Home page was taken from Wikipedia Article A
+- Instructions on how to implement form validation on the Sign Up page was taken from [Specific YouTube Tutorial](https://www.youtube.com/)
+- The icons in the footer were taken from [Font Awesome](https://fontawesome.com/)
 
-### Validation
+### Media
 
-- HTML has been validated with [W3C HTML5 Validator](https://validator.w3.org/).
-- CSS has been validated with [W3C CSS Validator](https://jigsaw.w3.org/css-validator/)
-- Links checked with [W3C Link Checker](https://validator.w3.org/checklink).
-
-- Google Lighthouse tool was used to assess the web-site
-
-### Manual Testing
-**TEST** | **ACTION** | **EXPECTATION** | **RESULT** 
-----------|----------|----------|----------
-Index | Size to 320px by 800px using Chrome Dev Tools	| Elements look good @ 320px by 800px | Works as expected
-Index | Size to 1920px by 1080px using Chrome Dev Tools | Elements look good 1920px by 1080px | Works as expected
-About | Size to 320px by 800px using Chrome Dev Tools	| Elements look good @ 320px by 800px | Works as expected
-About | Size to 1920px by 1080px using Chrome Dev Tools | Elements look good 1920px by 1080px | Works as expected
-Contact | Size to 320px by 800px using Chrome Dev Tools	| Elements look good @ 320px by 800px | Works as expected
-Contact | Size to 1920px by 1080px using Chrome Dev Tools | Elements look good 1920px by 1080px | Works as expected
-Index page test | All phone sizes checked using Chrome Dev Tools | Elements look good | Works at expected
-About page test | All phone sizes checked using Chrome Dev Tools | Elements look good | Works at expected
-Contact page test | All phone sizes checked using Chrome Dev Tools | Elements look good | Works at expected
-
-## Bugs
-
-### Fixed Bugs
-
-- 
-
----
-
-## Deployment
-
-- The site was deployed to GitHub pages. The steps to deploy are as follows:
-  - In the GitHub repository, navigate to the Settings tab
-  - From the source section drop-down menu, select the Master Branch
-  - Once the master branch has been selected, the page will be automatically refreshed with a detailed ribbon display to indicate the successful deployment.
-
-The live link can be found [HERE]()
-
-## Credits
-
-#### Images
-
-- 
-
-#### Writing
-
-- 
-
-## Contributors
-
-- [Liam](https://github.com/caleom)
-
----
+- Images were sourced from [Unsplash](https://unsplash.com/)
+- AI images generated using [Microsoft Designer](https://designer.microsoft.com/)
