@@ -1,4 +1,8 @@
-{% extends 'base.html' %} {% load static %} {% block extra_css %}
+{% extends 'base.html' %} 
+{% load static %}
+
+
+{% block extra_css %}
 <link
   rel="stylesheet"
   type="text/css"
@@ -35,11 +39,21 @@
         <i class="fa-solid fa-user text-primary ms-2"></i>
       </div>
 
-      <h4 class="text-primary">1</h4>
+      <h4 class="text-primary">{{depositing_users_count}}</h4>
     </div>
   </div>
 </div>
+
 <div id="chart"></div>
+
+{% if depositing_users_count|add:0 > 1 %}
+  <div id="barChart"></div>
+{% endif %}
+
+<div class='container text-center my-2'>
+  <a class='btn btn-success text-uppercase' href="{% url 'add_savings_deposit' goal_pk=goal.pk %}">Deposit to {{goal.name}}!</a>
+</div>
+
 
 <div class="row">
   <div class="col-12 mb-3 mb-lg-5">
@@ -83,95 +97,18 @@
       </div>
     </div>
   </div>
+  <span id='userDeposits' class='hidden'>{{ user_deposits|safe }}</span>
 </div>
-
 <script>
 
+    const userDeposits = JSON.parse(document.querySelector('#userDeposits').textContent);
     const GOAL_AMOUNT = {{goal.target_amount}};
+    const GOAL_NAME = `{{goal.name}} Savings Goal`
     const CURRENT_AMOUNT = {{goal.current_amount}};
 
+  
     const percentage = (CURRENT_AMOUNT / GOAL_AMOUNT) * 100;
     const user = `{{request.user.username}}`
-
-    const barOptions =  {
-        series: [{
-            name: user,
-            data: [44]
-      }, {
-        name: 'user 2',
-        data: [53]
-      }, {
-        name: 'user 3',
-        data: [12]
-      }, {
-        name: 'user 4',
-        data: [9]
-      }, {
-        name: 'user 5',
-        data: [25]
-      }],
-        chart: {
-        type: 'bar',
-        height: 350,
-        stacked: true,
-      },
-      plotOptions: {
-        bar: {
-          horizontal: true,
-          dataLabels: {
-            total: {
-              enabled: true,
-              offsetX: 0,
-              style: {
-                fontSize: '13px',
-                fontWeight: 900
-              }
-            }
-          }
-        },
-      },
-      stroke: {
-        width: 1,
-        colors: ['#fff']
-      },
-      title: {
-        text: 'Fiction Books Sales'
-      },
-      xaxis: {
-        categories: [{{goal.target_amount}}],
-        labels: {
-          formatter: function (val) {
-            return '$' + val
-          }
-        }
-      },
-      yaxis: {
-        title: {
-          text: undefined
-        },
-        labels: {
-            formatter: function (val) {
-              return '$' + val
-            }
-          }
-      },
-      tooltip: {
-        y: {
-            formatter: function (val) {
-                return '$' + val
-            }
-        }
-      },
-      fill: {
-        opacity: 1
-      },
-      legend: {
-        position: 'top',
-        horizontalAlign: 'left',
-        offsetX: 40
-      }
-      };
-
 
     const options = {
     chart: {
@@ -211,12 +148,98 @@
     labels: ["Progress"],
   };
 
-  const barChart = new ApexCharts(document.querySelector("#chart"), barOptions);
   const chart = new ApexCharts(document.querySelector("#chart"), options);
-
-
   chart.render();
-  barChart.render()
+
+  const barChartElement = document.querySelector('#barChart');
+
+  if(barChartElement){
+
+
+    const barSeries = [];
+
+    for (let i = 0; i < userDeposits.length; i++) {
+        let user = userDeposits[i].user;
+        let total = userDeposits[i].total;
+
+        let userSeries = {
+            name: user,
+            data: [total]
+        };
+
+        barSeries.push(userSeries);
+    }
+
+    const barOptions =  {
+        series: barSeries,
+        chart: {
+        type: 'bar',
+        height: 350,
+        stacked: true,
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true,
+          dataLabels: {
+            total: {
+              enabled: true,
+              offsetX: 0,
+              style: {
+                fontSize: '13px',
+                fontWeight: 900
+              }
+            }
+          }
+        },
+      },
+      stroke: {
+        width: 1,
+        colors: ['#fff']
+      },
+      title: {
+        text: GOAL_NAME
+      },
+      xaxis: {
+        categories: [{{goal.target_amount}}],
+        labels: {
+          formatter: function (val) {
+            return '$' + val
+          }
+        }
+      },
+      yaxis: {
+        title: {
+          text: undefined
+        },
+        labels: {
+          formatter: function (val) {
+            return '$' + val
+          }
+        },
+        max: {{goal.target_amount}} // Set y-axis maximum value to 10,000
+      },
+      tooltip: {
+        y: {
+            formatter: function (val) {
+                return '$' + val
+            }
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      legend: {
+        position: 'top',
+        horizontalAlign: 'left',
+        offsetX: 40
+      }
+      };
+
+
+    const barChart = new ApexCharts(barChartElement, barOptions);
+    barChart.render()
+
+  }
 </script>
 
 {% endblock %}

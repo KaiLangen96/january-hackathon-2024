@@ -1,11 +1,19 @@
 {% extends "base.html" %}
+
+{% load static %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/tracker.css' %}"
+/>
+{% endblock %}
 <!--  -->
 {% block content %}
 <!--  -->
 
-<div class="pt-3 text-center ">
-  I AM THE TRACKER PAGE
-
+<div class="pt-5 text-center">
+  <h1>LETS GET TRACKING</h1>
+  <h2>Save with your buddies</h2>
   <div id="chart"></div>
   <div class="container-fluid p-5" >
     <div class="row">
@@ -20,7 +28,9 @@
             </div>
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
-                <h2 class="d-flex align-items-center mb-0">${{amount_saved_last_week_user_goals}}</h2>
+                <h2 class="d-flex align-items-center mb-0">
+                  ${{amount_saved_last_week_user_goals}}<span class='ms-2 h6'>Your Week</span>
+                </h2>
               </div>
               <div class="col-4 text-right">
                 <span>10% <i class="fa fa-arrow-up"></i></span>
@@ -31,9 +41,8 @@
         </div>
       </div>
       <div class="col-xl-6 col-lg-6">
-        <a href={% url "all_saving_goals" %}>
 
-        <div class="card l-bg-orange-dark">
+        <a href={% url "all_saving_goals" %} class="card l-bg-orange-dark">
           <div class="card-statistic-3 p-4">
             <div class="card-icon card-icon-large">
               <i class="fas fa-trophy"></i>
@@ -43,21 +52,21 @@
             </div>
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
-                <h2 class="d-flex align-items-center mb-0">{{total_goals}}</h2>
+                <h2 class="d-flex align-items-center mb-0">
+                  ${{total_goals_amount}}<span class='ms-2 h6'>Total Goals Saved</span>
+                </h2>
               </div>
               <div class="col-4 text-right">
-                <span>2.5% <i class="fa fa-arrow-up"></i></span>
+                <span>{{total_goals}} <i class="fas fa-trophy"></i></span>
               </div>
             </div>
            
           </div>
-        </div>
         </a>
       </div>
 
       <div class="col-xl-6 col-lg-6">
-    <a href={% url "saving_goals"  %}>
-        <div class="card l-bg-cherry">
+        <a href={% url "saving_goals"  %} class="card l-bg-cherry">
           <div class="card-statistic-3 p-4">
             <div class="card-icon card-icon-large">
               <i class="fas fa-calculator"></i>
@@ -67,7 +76,9 @@
             </div>
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
-                <h2 class="d-flex align-items-center mb-0">${{total_amount_saved_user_goals}}</h2>
+                <h2 class="d-flex align-items-center mb-0">
+                  ${{total_amount_saved_user_goals}}<span class='ms-2 h6'>Your Savings</span>
+                </h2>
               </div>
               <div class="col-4 text-right">
                 <span>12.5% <i class="fa fa-arrow-up"></i></span>
@@ -75,12 +86,10 @@
             </div>
 
           </div>
-        </div>
-    </a>
+        </a>
       </div>
       <div class="col-xl-6 col-lg-6">
-        <a href={% url "users_list" %}>
-        <div class="card l-bg-blue-dark">
+        <a href={% url "users_list" %} class="card l-bg-blue-dark">
           <div class="card-statistic-3 p-4">
             <div class="card-icon card-icon-large">
               <i class="fas fa-users"></i>
@@ -90,15 +99,16 @@
             </div>
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
-                <h2 class="d-flex align-items-center mb-0">{{total_friends}}</h2>
+                <h2 class="d-flex align-items-center mb-0">
+                  ${{total_amount_saved_friends_goals}}<span class='ms-2 h6'>Buddies saved</span>
+                </h2>
               </div>
               <div class="col-4 text-right">
-                <span>9.23% <i class="fa fa-arrow-up"></i></span>
+                <span>{{total_friends}} <i class="fas fa-user"></i></span>
               </div>
             </div>
           
           </div>
-        </div>
         </a>
       </div>
     </div>
