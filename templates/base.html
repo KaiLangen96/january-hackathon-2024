@@ -27,7 +27,7 @@
     <header class="bg-dark py-2 px-4">
         <nav class="navbar navbar-expand-lg navbar-dark p-0">
         
-          <a class="navbar-brand" href="{% url 'home' %}"><img src="static/images/bb_logo.png" alt="logo image">  BudgetBuddies</a>
+          <a class="navbar-brand" href="{% url 'home' %}"><img src={% static 'images/bb_logo.png' %} alt="logo image">  BudgetBuddies</a>
 
           <button
             class="navbar-toggler"
@@ -92,7 +92,7 @@
               <button type="submit" class="btn btn-light mb-4">Subscribe</button>
             </form>
           </div>
-          <div class="col-md-4 mb-md-0">
+          <div class="col-md-4 mb-md-0 element-center">
             <h5>Follow Us</h5>
             <!-- Social Media Icons -->
             <ul class="list-inline">
