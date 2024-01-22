@@ -45,7 +45,11 @@
 </div>
 
 <div id="chart"></div>
-<div id="barChart"></div>
+
+{% if depositing_users_count|add:0 > 1 %}
+  <div id="barChart"></div>
+{% endif %}
+
 <div class='container text-center my-2'>
   <a class='btn btn-success text-uppercase' href="{% url 'add_savings_deposit' goal_pk=goal.pk %}">Deposit to {{goal.name}}!</a>
 </div>
@@ -105,6 +109,52 @@
   
     const percentage = (CURRENT_AMOUNT / GOAL_AMOUNT) * 100;
     const user = `{{request.user.username}}`
+
+    const options = {
+    chart: {
+      height: 280,
+      type: "radialBar",
+    },
+
+    series: [percentage.toFixed(2)],
+
+    plotOptions: {
+      radialBar: {
+        hollow: {
+          margin: 15,
+          size: "70%",
+        },
+
+        dataLabels: {
+          showOn: "always",
+          name: {
+            offsetY: -10,
+            show: true,
+            color: "#888",
+            fontSize: "13px",
+          },
+          value: {
+            color: "#111",
+            fontSize: "30px",
+            show: true,
+          },
+        },
+      },
+    },
+
+    stroke: {
+      lineCap: "round",
+    },
+    labels: ["Progress"],
+  };
+
+  const chart = new ApexCharts(document.querySelector("#chart"), options);
+  chart.render();
+
+  const barChartElement = document.querySelector('#barChart');
+
+  if(barChartElement){
+
 
     const barSeries = [];
 
@@ -186,50 +236,10 @@
       };
 
 
-    const options = {
-    chart: {
-      height: 280,
-      type: "radialBar",
-    },
+    const barChart = new ApexCharts(barChartElement, barOptions);
+    barChart.render()
 
-    series: [percentage.toFixed(2)],
-
-    plotOptions: {
-      radialBar: {
-        hollow: {
-          margin: 15,
-          size: "70%",
-        },
-
-        dataLabels: {
-          showOn: "always",
-          name: {
-            offsetY: -10,
-            show: true,
-            color: "#888",
-            fontSize: "13px",
-          },
-          value: {
-            color: "#111",
-            fontSize: "30px",
-            show: true,
-          },
-        },
-      },
-    },
-
-    stroke: {
-      lineCap: "round",
-    },
-    labels: ["Progress"],
-  };
-
-  const barChart = new ApexCharts(document.querySelector("#barChart"), barOptions);
-  const chart = new ApexCharts(document.querySelector("#chart"), options);
-
-
-  chart.render();
-  barChart.render()
+  }
 </script>
 
 {% endblock %}
