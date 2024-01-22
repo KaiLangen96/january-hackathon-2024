@@ -9,7 +9,7 @@
 <div class="d-flex justify-content-between transaction-header">
   <div>
     <h1 class="mb-0">{{goal.name}}</h1>
-    <p class="text-secondary mb-0">Current goal transactions</p>
+    <p class="text-secondary mb-0">Current goal status</p>
   </div>
   <div class="d-flex gap-4">
     <div>
@@ -27,6 +27,15 @@
       </div>
 
       <h4 class="text-success">{{goal.current_amount}}</h4>
+    </div>
+
+    <div>
+      <div class="d-flex align-items-center">
+        <span>Buddies</span>
+        <i class="fa-solid fa-user text-primary ms-2"></i>
+      </div>
+
+      <h4 class="text-primary">1</h4>
     </div>
   </div>
 </div>
@@ -47,7 +56,7 @@
               <th>Date</th>
               <th>Description</th>
               <th>Amount</th>
-              <th>Status</th>
+              <th>User</th>
             </tr>
           </thead>
           <tbody>
@@ -63,8 +72,8 @@
                 </div>
               </td>
               <td>
-                <span class="badge fs-6 fw-normal bg-tint-success text-success"
-                  >Completed</span
+                <span class="badge fs-6 fw-normal bg-tint-success text-success text-capitalize"
+                  >{{transaction.user.username}}</span
                 >
               </td>
             </tr>

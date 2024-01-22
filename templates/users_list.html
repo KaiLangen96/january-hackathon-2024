@@ -9,6 +9,7 @@
 {% block content %}
 <!--  -->
 
+{% if request.user.is_authenticated %}
 <div class="container">
   <div class="text-center p-4"><h1 class='text-primary'>Your Budget-Buddies</h1></div>
   <div class="row">
@@ -55,6 +56,8 @@
     </div>
   </div>
 </div>
+{% endif %}
+
 
 <div class="container">
   <div class="text-center p-4"><h1>All Budget-Buddies Users</h1></div>

@@ -44,6 +44,10 @@ class SavingGoal(models.Model):
     def __str__(self):
         return self.name
 
+    def add_deposit(self, amount):
+        self.current_amount += amount
+        self.save()
+
 class Transaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.CharField(max_length=255)
@@ -58,3 +62,6 @@ class Transaction(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+        # Automatically create a deposit if a saving goal is associated with the transaction
+        if self.saving_goal:
+            self.saving_goal.add_deposit(self.amount)

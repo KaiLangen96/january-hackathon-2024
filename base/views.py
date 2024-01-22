@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-from django.http import JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic, View
+from django.db import models
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_POST
@@ -55,7 +56,7 @@ class HomePageView(generic.View):
         )
 
 
-class TrackerPageView(generic.View):
+class TrackerPageView( generic.View):
     """
 
     Basic tracker view.
@@ -125,13 +126,34 @@ def saving_goal_details(request, goal_pk):
 
     return render(request, template_name, {"goal": goal})
 
-@login_required
-def saving_goals(request):
+class SavingGoalsListView(LoginRequiredMixin, generic.ListView):
+    model = SavingGoal
     template_name = "saving_goals.html"
-    goals = SavingGoal.objects.filter(user=request.user)
+    context_object_name = "goals"
 
-    return render(request, template_name, {"goals": goals})
+    def get_queryset(self):
+        return SavingGoal.objects.filter(user=self.request.user)
 
+class AllSavingsGoalsListView(LoginRequiredMixin, generic.ListView):
+    model = SavingGoal
+    template_name = "view_all_savings_goals.html"
+    context_object_name = "goals"
+
+    def get_queryset(self):
+        user_profile = self.request.user.profile
+
+        # Get all friends' profiles
+        friends_profiles = user_profile.friends.all()
+
+        # Extract User instances from friends_profiles
+        friends_users = User.objects.filter(profile__in=friends_profiles)
+
+        # Get all goals associated with the logged-in user and friends
+        all_goals = SavingGoal.objects.filter(
+            models.Q(user=user_profile.user) | models.Q(user__in=friends_users)
+        )
+
+        return all_goals
 
 @login_required
 def add_saving_goal(request):
@@ -164,9 +186,6 @@ def update_saving_goal(request, pk):
         form = SavingGoalForm(instance=goal)
 
     return render(request, template_name, {"form": form, "goal": goal})
-
-
-
 
 
 class SavingGoalDeleteView(DeleteView):
