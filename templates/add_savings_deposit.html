@@ -1,9 +1,7 @@
-<!-- templates/add_savings_deposit.html -->
-
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Add Savings Deposit for {{ goal.name }}</h1>
+  <h1>Add Savings Deposit for: {{ goal.name }}</h1>
   <form method="post" action="">
     {% csrf_token %}
     {{ form.as_p }}
@@ -11,11 +9,3 @@
   </form>
   <a href="{% url 'saving_goals' %}">Cancel</a>
 {% endblock %}
-
-{% comment %} <form method="post" action="">
-  {% csrf_token %}
-  {{ form.as_p }}
-
-
-  <button type="submit">Perform Action</button>
-</form> {% endcomment %}
