@@ -12,12 +12,12 @@
 
   {% for goal in goals %}
   <div class="container py-4">
-    <article class="postcard dark blue glossy-border p-3">
+    <article class="postcard dark info glossy-border p-3">
       <div class="saving-container d-flex flex-column flex-md-row justify-content-between">
         <div class="goals-text mb-3 mb-md-0">
           <a href="{% url 'saving_goal_details' goal_pk=goal.pk %}">
-            <p class="mb-0">
-              <span class="d-inline d-md-none">{{ goal.name | truncatechars:10 }}</span>
+            <p class="mb-0 text-black fw-bold text-center">
+              <span class="d-inline d-md-none text-red">{{ goal.name | truncatechars:10 }}</span>
               <span class="d-none d-md-inline">{{ goal.name }}</span>
               - Target Amount: {{ goal.target_amount }}€ - Current Amount: {{ goal.current_amount }}€
             </p>
