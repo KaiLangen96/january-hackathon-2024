@@ -60,7 +60,11 @@ class HomePageView(generic.View):
         )
 
 
-class TrackerPageView(generic.View):
+class TrackerPageView(LoginRequiredMixin, generic.View):
+    """
+    Tracking page view.
+
+    """
     template_name = "tracker.html"
 
     def get(self, request):
