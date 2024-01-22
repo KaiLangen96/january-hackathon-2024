@@ -1,7 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-from django.views import generic, View
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import generic
+from django.utils import timezone
+from django.db.models import Sum,  Q
+from django.db import models
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.views.decorators.http import require_POST
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -10,7 +15,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 
 
-from .models import Transaction, SavingGoal
+from .models import Transaction, SavingGoal, Profile
 from .forms import TransactionForm, SavingGoalForm, ContactForm
 
 
@@ -52,53 +57,81 @@ class HomePageView(generic.View):
             "home.html",
         )
 
-class UsersListView(generic.View):
-    """
-    Basic homepage view.
-
-    """
-    template_name = "users_list.html"
-
-    def get(self, request):
-        """
-        Basic Get view for the homepage.
-
-        """
-
-        all_users = User.objects.all()
-        user = request.user
-
-        context = {
-            "all_users": all_users,
-        }
-
-        return render(request, self.template_name, context)
-
 
 class TrackerPageView(generic.View):
-    """
-
-    Basic tracker view.
-
-    """
-
     template_name = "tracker.html"
 
     def get(self, request):
-        """
-        Basic Get view for the homepage.
-
-        """
-
-        all_users = User.objects.all()
+        # Get the logged-in user
         user = request.user
 
+        # Get all friends' profiles
+        friends_profiles = user.profile.friends.all()
+
+        # Extract User instances from friends_profiles
+        friends_users = User.objects.filter(profile__in=friends_profiles)
+
+        # Get all goals associated with the logged-in user and friends
+        all_goals = SavingGoal.objects.filter(
+            models.Q(user=user) | models.Q(user__in=friends_users)
+        )
+
+        # Calculate total users, total amount saved, and total amount saved in the last week
+        total_friends = friends_users.count()
+
+        # Calculate total amount saved for the user's goals
+        total_amount_saved_user_goals = all_goals.filter(user=user).aggregate(Sum('current_amount'))['current_amount__sum'] or 0
+
+        # Calculate total amount saved in the last week for the user's goals
+        last_week_start = timezone.now() - timezone.timedelta(days=7)
+        amount_saved_last_week_user_goals = all_goals.filter(
+            created_at__gte=last_week_start, user=user
+        ).aggregate(Sum('current_amount'))['current_amount__sum'] or 0
+
+        # Calculate total amount saved for friends' goals
+        total_amount_saved_friends_goals = all_goals.exclude(user=user).aggregate(Sum('current_amount'))['current_amount__sum'] or 0
+
+        # Combine into total_goals
+        total_goals_amount = total_amount_saved_user_goals + total_amount_saved_friends_goals
+
+        total_user_goals = all_goals.filter(user=user).count()
+        total_friends_goals = all_goals.exclude(user=user).count()
+        total_goals = total_user_goals + total_friends_goals
+
         context = {
-            "all_users": all_users,
             "user": user,
+            "total_friends": total_friends,
+            "total_goals": total_goals,
+            "total_goals_amount": total_goals_amount,
+            "total_amount_saved_user_goals": total_amount_saved_user_goals,
+            "amount_saved_last_week_user_goals": amount_saved_last_week_user_goals,
+            "total_amount_saved_friends_goals": total_amount_saved_friends_goals,
         }
 
         return render(request, self.template_name, context)
+
+
+class AllSavingsGoalsListView(LoginRequiredMixin, generic.ListView):
+    model = SavingGoal
+    template_name = "view_all_savings_goals.html"
+    context_object_name = "goals"
+
+    def get_queryset(self):
+        user_profile = self.request.user.profile
+
+        # Get all friends' profiles
+        friends_profiles = user_profile.friends.all()
+
+        # Extract User instances from friends_profiles
+        friends_users = User.objects.filter(profile__in=friends_profiles)
+
+        # Get all goals associated with the logged-in user and friends
+        all_goals = SavingGoal.objects.filter(
+            models.Q(user=user_profile.user) | models.Q(user__in=friends_users)
+        )
+
+        return all_goals
+
 
 
 class AboutPageView(generic.View):
@@ -145,13 +178,34 @@ def saving_goal_details(request, goal_pk):
 
     return render(request, template_name, {"goal": goal})
 
-@login_required
-def saving_goals(request):
+class SavingGoalsListView(LoginRequiredMixin, generic.ListView):
+    model = SavingGoal
     template_name = "saving_goals.html"
-    goals = SavingGoal.objects.filter(user=request.user)
+    context_object_name = "goals"
 
-    return render(request, template_name, {"goals": goals})
+    def get_queryset(self):
+        return SavingGoal.objects.filter(user=self.request.user)
 
+class AllSavingsGoalsListView(LoginRequiredMixin, generic.ListView):
+    model = SavingGoal
+    template_name = "view_all_savings_goals.html"
+    context_object_name = "goals"
+
+    def get_queryset(self):
+        user_profile = self.request.user.profile
+
+        # Get all friends' profiles
+        friends_profiles = user_profile.friends.all()
+
+        # Extract User instances from friends_profiles
+        friends_users = User.objects.filter(profile__in=friends_profiles)
+
+        # Get all goals associated with the logged-in user and friends
+        all_goals = SavingGoal.objects.filter(
+            models.Q(user=user_profile.user) | models.Q(user__in=friends_users)
+        )
+
+        return all_goals
 
 @login_required
 def add_saving_goal(request):
@@ -184,9 +238,6 @@ def update_saving_goal(request, pk):
         form = SavingGoalForm(instance=goal)
 
     return render(request, template_name, {"form": form, "goal": goal})
-
-
-
 
 
 class SavingGoalDeleteView(DeleteView):
@@ -234,3 +285,46 @@ def handler405(request, exception):
     Custom 405 page
     """
     return render(request, "error_html/405.html", status=405)
+
+
+class UsersListView(generic.View):
+    """
+    Basic homepage view.
+
+    """
+    template_name = "users_list.html"
+
+    def get(self, request):
+        """
+        Basic Get view for the homepage.
+
+        """
+
+        all_users = User.objects.all()
+        user = request.user
+
+        context = {
+            "all_users": all_users,
+        }
+
+        return render(request, self.template_name, context)
+
+
+@login_required
+@require_POST
+def toggle_friend(request):
+    friend_id = request.POST.get('friend_id')
+    friend_profile = get_object_or_404(Profile, id=friend_id)
+    
+    user_profile = request.user.profile
+
+    if user_profile.friends.filter(id=friend_id).exists():
+        # If friend is already in the friends list, remove them
+        user_profile.friends.remove(friend_profile)
+        message = 'Friend removed successfully'
+    else:
+        # If friend is not in the friends list, add them
+        user_profile.friends.add(friend_profile)
+        message = 'Friend added successfully'
+
+    return redirect('users_list')

@@ -9,6 +9,56 @@
 {% block content %}
 <!--  -->
 
+{% if request.user.is_authenticated %}
+<div class="container">
+  <div class="text-center p-4"><h1 class='text-primary'>Your Budget-Buddies</h1></div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="main-box clearfix">
+        <div class="table-responsive">
+          <table class="table user-list">
+            <thead>
+              <tr>
+                <th><span>User</span></th>
+                <th><span>Saved</span></th>
+                <th class="text-center"><span>Created</span></th>
+                <th><span>Add</span></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for friend in request.user.profile.friends.all %}
+              <tr>
+                  <td>
+                      <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="" />
+                      <a href="#" class="user-link text-capitalize">{{ friend.user.username }}</a>
+                      <span class="user-subhead">Admin</span>
+                  </td>
+                  <td>$1000</td>
+                  <td class="text-center">
+                      <span class="label label-default">Date</span>
+                  </td>
+                  <td>
+                      <form method="post" action="{% url 'toggle_friend' %}" id="toggleFriendForm{{ friend.user.id }}">
+                          {% csrf_token %}
+                          <input type="hidden" name="friend_id" value="{{ friend.user.profile.id }}">
+                          <button type="submit" class="table-link">
+                              <i class="fas fa-minus"></i> <!-- Show minus icon to remove friend -->
+                          </button>
+                      </form>
+                  </td>
+              </tr>
+          {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
 <div class="container">
   <div class="text-center p-4"><h1>All Budget-Buddies Users</h1></div>
   <div class="row">
@@ -27,32 +77,33 @@
 
             <tbody>
               {% for user in all_users %}
-
-              <tr>
-                <td>
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png"
-                    alt=""
-                  />
-                  <a href="#" class="user-link text-capitalize"
-                    >{{user.username}}</a
-                  >
-                  <span class="user-subhead">Admin</span>
-                </td>
-                <td>$1000</td>
-                <td class="text-center">
-                  <span class="label label-default">Date</span>
-                </td>
-                <td>
-                  <a href="#" class="table-link">
-                    <span class="fa-stack">
-                      <i class="fa fa-square fa-stack-2x"></i>
-                      <i class="fa fa-plus fa-stack-1x fa-inverse"></i>
-                    </span>
-                  </a>
-                </td>
-              </tr>
-              {% endfor %}
+              {% if user != request.user %}
+                  <tr>
+                      <td>
+                          <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="" />
+                          <a href="#" class="user-link text-capitalize">{{ user.username }}</a>
+                          <span class="user-subhead">Admin</span>
+                      </td>
+                      <td>$1000</td>
+                      <td class="text-center">
+                          <span class="label label-default">Date</span>
+                      </td>
+                      <td>
+                          <form method="post" action="{% url 'toggle_friend' %}" id="toggleFriendForm{{ user.id }}">
+                              {% csrf_token %}
+                              <input type="hidden" name="friend_id" value="{{ user.profile.id }}">
+                              <button type="submit" class="table-link">
+                                  {% if user.profile in request.user.profile.friends.all %}
+                                      <i class="fas fa-minus"></i> <!-- Show minus icon if already friends -->
+                                  {% else %}
+                                      <i class="fas fa-plus"></i> <!-- Show plus icon if not friends -->
+                                  {% endif %}
+                              </button>
+                          </form>
+                      </td>
+                  </tr>
+              {% endif %}
+          {% endfor %}
             </tbody>
           </table>
         </div>
