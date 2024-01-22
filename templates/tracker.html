@@ -28,7 +28,9 @@
             </div>
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
-                <h2 class="d-flex align-items-center mb-0">${{amount_saved_last_week_user_goals}}</h2>
+                <h2 class="d-flex align-items-center mb-0">
+                  ${{amount_saved_last_week_user_goals}}<span class='ms-2 h6'>Your Week</span>
+                </h2>
               </div>
               <div class="col-4 text-right">
                 <span>10% <i class="fa fa-arrow-up"></i></span>
@@ -50,10 +52,12 @@
             </div>
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
-                <h2 class="d-flex align-items-center mb-0">{{total_goals}}</h2>
+                <h2 class="d-flex align-items-center mb-0">
+                  ${{total_goals_amount}}<span class='ms-2 h6'>Total Goals Saved</span>
+                </h2>
               </div>
               <div class="col-4 text-right">
-                <span>2.5% <i class="fa fa-arrow-up"></i></span>
+                <span>{{total_goals}} <i class="fas fa-trophy"></i></span>
               </div>
             </div>
            
@@ -72,7 +76,9 @@
             </div>
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
-                <h2 class="d-flex align-items-center mb-0">${{total_amount_saved_user_goals}}</h2>
+                <h2 class="d-flex align-items-center mb-0">
+                  ${{total_amount_saved_user_goals}}<span class='ms-2 h6'>Your Savings</span>
+                </h2>
               </div>
               <div class="col-4 text-right">
                 <span>12.5% <i class="fa fa-arrow-up"></i></span>
@@ -93,10 +99,12 @@
             </div>
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
-                <h2 class="d-flex align-items-center mb-0">{{total_friends}}</h2>
+                <h2 class="d-flex align-items-center mb-0">
+                  ${{total_amount_saved_friends_goals}}<span class='ms-2 h6'>Buddies saved you</span>
+                </h2>
               </div>
               <div class="col-4 text-right">
-                <span>9.23% <i class="fa fa-arrow-up"></i></span>
+                <span>{{total_friends}} <i class="fas fa-user"></i></span>
               </div>
             </div>
           

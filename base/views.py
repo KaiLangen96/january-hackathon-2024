@@ -64,34 +64,32 @@ class TrackerPageView(generic.View):
     template_name = "tracker.html"
 
     def get(self, request):
-        # Get the logged-in user
         user = request.user
 
-        # Get all friends' profiles
+        # Get all friends profiles
         friends_profiles = user.profile.friends.all()
-
-        # Extract User instances from friends_profiles
         friends_users = User.objects.filter(profile__in=friends_profiles)
+        total_friends = friends_users.count()
 
         # Get all goals associated with the logged-in user and friends
         all_goals = SavingGoal.objects.filter(
             models.Q(user=user) | models.Q(user__in=friends_users)
-        )
-
-        # Calculate total users, total amount saved, and total amount saved in the last week
-        total_friends = friends_users.count()
+        )    
 
         # Calculate total amount saved for the user's goals
-        total_amount_saved_user_goals = all_goals.filter(user=user).aggregate(Sum('current_amount'))['current_amount__sum'] or 0
+        total_amount_saved_user_goals = Transaction.objects.filter(user=user).aggregate(Sum('amount'))['amount__sum'] or 0
 
         # Calculate total amount saved in the last week for the user's goals
         last_week_start = timezone.now() - timezone.timedelta(days=7)
-        amount_saved_last_week_user_goals = all_goals.filter(
-            created_at__gte=last_week_start, user=user
-        ).aggregate(Sum('current_amount'))['current_amount__sum'] or 0
+        amount_saved_last_week_user_goals = Transaction.objects.filter(
+            user=user,
+            date__gte=last_week_start,
+        ).aggregate(Sum('amount'))['amount__sum'] or 0
 
-        # Calculate total amount saved for friends' goals
-        total_amount_saved_friends_goals = all_goals.exclude(user=user).aggregate(Sum('current_amount'))['current_amount__sum'] or 0
+        # Calculate total amount saved from friends
+        total_amount_saved_friends_goals = Transaction.objects.filter(
+            user__in=friends_users,
+        ).exclude(user=user).aggregate(Sum('amount'))['amount__sum'] or 0
 
         # Combine into total_goals
         total_goals_amount = total_amount_saved_user_goals + total_amount_saved_friends_goals
