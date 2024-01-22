@@ -24,6 +24,17 @@ h1, h2, h3, h4, h5, h6 {
 
 .min-h-screen{
   min-height: 100vh;
+  
+  
+.nav-link{
+  font-weight: bolder;
+  font-size: 1.6vw;
+  color:white;
+}
+@media screen and (max-width: 991px){
+.nav-link{
+  font-size: 1rem;
+}
 }
 /*===============HOME PAGE========================*/
 
@@ -141,7 +152,25 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5)
 }
+.download{
+  text-align: center;
+  margin-top: 20px;
+  font-size: large;
+}
+.download-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff; /* Button background color */
+  color: #fff; /* Button text color */
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
+.download-button:hover {
+  background-color: #0056b3; /* Button background color on hover */
+}
 .our-services, .digitize-sect {
   background-color: rgb(33, 37, 41);
   color: white;
@@ -179,9 +208,14 @@ a {
  input[type="text"], 
  input[type="email"],
  input[type="password"]{
-width: 40%;
+width: min(90%, 500px);
 height: 2.5rem
 }
+
+textarea{
+  width: min(90%, 500px);
+}
+
 .helptext{
   display:flex;
   flex-direction: column;
@@ -309,20 +343,17 @@ background: linear-gradient(270deg, rgba(245,245,245,1) 10%, rgba(245,245,245,0)
 .right-col-slide-delay{
   opacity: 0;
   animation: SlideRight 2s linear 1.5s forwards;
+}
 
 .form-group {
-  margin: 2rem;
+  margin: 1rem;
 }
 
-.form-label {
+/* .form-label {
   display: block;
 
-}
-
-/* .contact-container {
-   background-color: rgba( 255, 255, 255, 0.9);
-   width: min(90%, 800px);
 } */
+
 /*===========Contact Page and login Styling ========*/
 .contact-container .btn,
 .contact-container .btn:active,
@@ -374,5 +405,4 @@ left:0;
   0% {transform: translate(400px);opacity: 0;}
   100%{transform: translate(0px);opacity: 1;}
 }
-
 
